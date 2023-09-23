@@ -26,6 +26,8 @@ function displayGallery(datas){
 
 console.log("je suis 2ème");
 
+
+
 //Création des categories
 let travauxFiltrer = document.createElement('div');
 travauxFiltrer.classList.add('filter_travaux')
@@ -39,6 +41,7 @@ for (let i = 0; i < 4; i++) {
     document.querySelector('.filter_travaux').appendChild(categorie);
     
 }
+
 
 // let lesCategorys = ["Tous", "Objets", "Appartements", "Hôtel & restaurants"]; 
 
@@ -55,36 +58,59 @@ document.querySelector('#select2').innerText = 'Appartements';
 document.querySelector('#select3').innerText = 'Hôtels & restaurants';
 
 
+
 //Création de la gallery
 let gallery = document.createElement('div');
 gallery.classList.add('gallery');
 document.getElementById('portfolio').appendChild(gallery);
 
 
-
 //Filtrer les travaux
-const objet = document.querySelector('#select1');
-
-objet.addEventListener('click', function() {
-    const travauxFiltrer1 = datas.filter(function(id, data){
-        return data.categoryId == 1;
-    });
-
-    document.querySelector('.gallery').innerHTML = '';
-    displayGallery(travauxFiltrer1);
-});
-
-
 function filtreCategory(id, datas){
     return datas.filter((data) => data.categoryId == id)
 };
 
-// objet.addEventListener('click', function() {
-//     const categ1 = datas.filter(function(data) {
-//         return data.categoryId == 1;
-//     })
-// })
+const tousFilter = document.querySelector('#select0');
 
+tousFilter.addEventListener('click', function() {
+    const travauxFiltres = projects.filter(function(project) {
+        return project.categoryId <= 3;
+    })
+    console.log(travauxFiltres);
+});
+
+
+/**************************************************************/
+const objetFilter = document.querySelector('#select1');
+
+objetFilter.addEventListener('click', function() {
+    const travauxFiltres = projects.filter(function(project) {
+        return project.categoryId == 1;
+    })
+    console.log(travauxFiltres);
+});
+
+
+/**************************************************************/
+const appartementFilter = document.querySelector('#select2');
+
+appartementFilter.addEventListener('click', function() {
+    const travauxFiltres = projects.filter(function(project) {
+        return project.categoryId == 2;
+    })
+    console.log(travauxFiltres);
+});
+
+
+/**************************************************************/
+const hotelRestoFilter = document.querySelector('#select3');
+
+hotelRestoFilter.addEventListener('click', function() {
+    const travauxFiltres = projects.filter(function(project) {
+        return project.categoryId == 3;
+    })
+    console.log(travauxFiltres);
+});
 
 // const categ1 = .
 // const categ2 = projects.filter(function(project) {
@@ -96,6 +122,7 @@ function filtreCategory(id, datas){
 // const categ4 = projects.filter(function(project) {
 //     return 
 //  });
+
 
 
 //Ajout des balise <a> pour les liens de la <nav>
