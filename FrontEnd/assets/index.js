@@ -59,24 +59,28 @@ document.querySelector('#select3').innerText = 'Hôtels & restaurants';
 
 
 
+
+
+
 //Création de la gallery
 let gallery = document.createElement('div');
 gallery.classList.add('gallery');
 document.getElementById('portfolio').appendChild(gallery);
 
 
+
+
+
+
 //Filtrer les travaux
 function filtreCategory(id, datas){
-    return datas.filter((data) => data.categoryId == id)
+    return datas.filter((data) => data.categoryId == id);
 };
 
 const tousFilter = document.querySelector('#select0');
 
 tousFilter.addEventListener('click', function() {
-    const travauxFiltres = projects.filter(function(project) {
-        return project.categoryId <= 3;
-    })
-    console.log(travauxFiltres);
+    displayGallery(filtreCategory(id, projects))
 });
 
 
@@ -84,10 +88,7 @@ tousFilter.addEventListener('click', function() {
 const objetFilter = document.querySelector('#select1');
 
 objetFilter.addEventListener('click', function() {
-    const travauxFiltres = projects.filter(function(project) {
-        return project.categoryId == 1;
-    })
-    console.log(travauxFiltres);
+    displayGallery(filtreCategory(1, projects))
 });
 
 
@@ -95,33 +96,20 @@ objetFilter.addEventListener('click', function() {
 const appartementFilter = document.querySelector('#select2');
 
 appartementFilter.addEventListener('click', function() {
-    const travauxFiltres = projects.filter(function(project) {
-        return project.categoryId == 2;
-    })
-    console.log(travauxFiltres);
+    displayGallery(filtreCategory(2, projects))
 });
 
 
 /**************************************************************/
 const hotelRestoFilter = document.querySelector('#select3');
 
-hotelRestoFilter.addEventListener('click', function() {
-    const travauxFiltres = projects.filter(function(project) {
-        return project.categoryId == 3;
-    })
-    console.log(travauxFiltres);
+hotelRestoFilter.addEventListener('click', () => {
+    displayGallery(filtreCategory(3, projects))
 });
 
-// const categ1 = .
-// const categ2 = projects.filter(function(project) {
-//     return 
-//  });
-// const categ3 = projects.filter(function(project) {
-//     return 
-//  });
-// const categ4 = projects.filter(function(project) {
-//     return 
-//  });
+
+
+
 
 
 
