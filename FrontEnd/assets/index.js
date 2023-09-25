@@ -28,6 +28,7 @@ console.log("je suis 2ème");
 
 
 
+
 //Création des categories
 let travauxFiltrer = document.createElement('div');
 travauxFiltrer.classList.add('filter_travaux')
@@ -77,10 +78,11 @@ function filtreCategory(id, datas){
     return datas.filter((data) => data.categoryId == id);
 };
 
+
 const tousFilter = document.querySelector('#select0');
 
 tousFilter.addEventListener('click', function() {
-    displayGallery(filtreCategory(id, projects))
+    displayGallery(projects)
 });
 
 
@@ -112,7 +114,6 @@ hotelRestoFilter.addEventListener('click', () => {
 
 
 
-
 //Ajout des balise <a> pour les liens de la <nav>
 for (let i = 0; i < 4; i++) {
    const lien = document.createElement('a');
@@ -120,3 +121,19 @@ for (let i = 0; i < 4; i++) {
    const li = document.querySelector('li');
    lien.appendChild(li);   
 }
+
+
+
+
+
+// envoi des données saisie dans la page de connexion
+fetch('http://localhost:5678/users/login', {
+    method: "POST",
+    headers: {"Content-Type": "application/json",
+              "Authorization": "token",
+    },
+    body: {
+        "userId": 1,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NTY1MDIzOCwiZXhwIjoxNjk1NzM2NjM4fQ.OxMUB8ctuWaJr-Q9T28pvtBdheG20jtuFR2vSaTsDic"
+    }
+})

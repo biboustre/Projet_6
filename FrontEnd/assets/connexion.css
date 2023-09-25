@@ -84,7 +84,7 @@ nav li {
 	color: black;
 }
 
-li:hover {
+a:hover {
 	color: #B1663C;
 }
 
@@ -93,6 +93,7 @@ li:nth-child(3){
 }
 
 /****Connexion******/
+
 main{
 	display: flex;
 	align-items: center;
