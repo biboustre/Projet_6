@@ -85,7 +85,6 @@ tousFilter.addEventListener('click', function() {
     displayGallery(projects)
 });
 
-
 /**************************************************************/
 const objetFilter = document.querySelector('#select1');
 
@@ -93,14 +92,12 @@ objetFilter.addEventListener('click', function() {
     displayGallery(filtreCategory(1, projects))
 });
 
-
 /**************************************************************/
 const appartementFilter = document.querySelector('#select2');
 
 appartementFilter.addEventListener('click', function() {
     displayGallery(filtreCategory(2, projects))
 });
-
 
 /**************************************************************/
 const hotelRestoFilter = document.querySelector('#select3');
@@ -126,6 +123,8 @@ for (let i = 0; i < 4; i++) {
 
 
 
+
+
 // envoi des données saisie dans la page de connexion
 fetch('http://localhost:5678/users/login', {
     method: "POST",
@@ -137,3 +136,80 @@ fetch('http://localhost:5678/users/login', {
         "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NTY1MDIzOCwiZXhwIjoxNjk1NzM2NjM4fQ.OxMUB8ctuWaJr-Q9T28pvtBdheG20jtuFR2vSaTsDic"
     }
 })
+
+const btnConnexion = document.querySelector('form');
+
+btnConnexion.addEventListener('submit', function(event){
+    event.preventDefault();
+
+    const connexion = {
+    adresseMail: event.target.querySelector("[name=email]").value,
+    password : event.target.querySelector("[name=mot_de_passe]").value,
+};
+
+    const chargeUtile = JSON.stringify(connexion);
+
+    fetch("http://localhost:5678/users/login", {
+        method: "POST",
+        headers: {"content-Type": "application/json"},
+        body: chargeUtile
+    });
+});
+
+
+
+
+
+
+
+//Affichage de la modale---------------------------
+let modale = null;
+
+const openModale = function(e) {
+    e.preventDefault();
+    const target = document.querySelector(e.target.getAttribute('href'))
+    target.style.display = null;
+    target.removeAttribute('aria-hidden')
+    target.setAttribute('aria-modale', 'true');
+    modale = target;
+    modale.addEventListener('click', closeModale);
+    modale.querySelector('.js-close-modale').addEventListener('click', closeModale);
+    modale.querySelector('.js-stop-modale').addEventListener('click', stopPropagation)
+
+}
+
+
+const closeModale = function (e) {
+    if (modale === null) return
+    e.preventDefault();
+    modale.style.display = "none";
+    modale.setAttribute('aria-hidden', 'true')
+    modale.removeAttribute('aria-modale');
+    // modale.removeEventListener('click', closeModale);é
+    modale.querySelector('.js-close-modale').removeEventListener('click', closeModale);
+    modale.querySelector('.js-stop-modale').removeEventListener('click', stopPropagation);
+    modale = null;
+
+}
+
+
+//Ne ferme pas la modale quand on click dessus
+const stopPropagation = function(e) {
+    e.stopPropagation();
+}
+
+//Lien qui ouvre la boîte modale
+document.querySelectorAll('.js-modale').forEach(a => {
+    a.addEventListener('click', openModale)
+});
+
+
+//Fermer la modale en appuyant sur Echap
+window.addEventListener('keydown', function(e) {
+    if (e.key === "Escape" || e.key === "Esc") {
+        closeModale(e);
+    }
+})
+
+
+

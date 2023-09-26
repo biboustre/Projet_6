@@ -95,9 +95,21 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
-	color: #B1663C;
+a{
+	text-decoration: none;
+	color: black;
 }
+
+a:hover {
+	color: #B1663C;
+	cursor: pointer;
+}
+
+a:nth-child(3){
+	color: black;
+	font-weight: 600;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -132,11 +144,7 @@ li:hover {
 	margin: 50px 0;
 }
 
-a{
-	text-decoration: none;
-	color: black;
-	font-weight: 600;
-}
+
 
 .select{
 	display: flex;
@@ -219,5 +227,51 @@ footer nav ul {
 
 
 
+
+#modale{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.title_modale{
+	font-size: 26px;
+	font-weight: 400;
+	font-family: Work Sans;
+	color: black;
+	margin-top: 60px;
+}
+
+.modal_wrapper{
+	display: flex;
+	justify-content: center;
+	overflow: auto;
+	width: 630px;
+	height: 688px;
+	background-color: white;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.modal_wrapper > button{
+	position: absolute;
+	top: 26px;
+	right: 30px;
+	border: none;
+	height: 24px;
+	width: 24px;
+	cursor: pointer;
+}
+
+button > i{
+	color: red;
+	height: 24px;
+	width: 24px;
+}
 
 
