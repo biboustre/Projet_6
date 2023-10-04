@@ -3,6 +3,7 @@
    License: none (public domain)
 */
 
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -135,8 +136,24 @@ a:nth-child(3){
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-right: 31px;
 }
+
+
+.head_portfolio{
+	display: flex;
+	justify-content: center;
+}
+
+.head_portfolio > i{
+	width: 15.58px;
+	height: 15.58px;
+	align-self: end;
+	padding-bottom: 3px;
+	margin-right: 10.42px;
+}
+
+
 
 .filter_travaux{
 	display: flex;
@@ -176,6 +193,8 @@ a:nth-child(3){
 	width: 100%;
 
 }
+
+
 #contact {
 	width: 50%;
 margin: auto;
@@ -243,11 +262,13 @@ footer nav ul {
 	font-family: Work Sans;
 	color: black;
 	margin-top: 60px;
+	margin-bottom: 50px;
 }
 
 .modal_wrapper{
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 	overflow: auto;
 	width: 630px;
 	height: 688px;
@@ -258,7 +279,13 @@ footer nav ul {
 	transform: translate(-50%, -50%);
 }
 
-.modal_wrapper > button{
+
+.js-modale{
+	align-self: end;
+	padding-bottom: 3px;
+}
+
+.js-close-modale{
 	position: absolute;
 	top: 26px;
 	right: 30px;
@@ -268,10 +295,44 @@ footer nav ul {
 	cursor: pointer;
 }
 
-button > i{
-	color: red;
+.js-close-modale > i{
 	height: 24px;
 	width: 24px;
 }
 
 
+
+
+.modal_galerry{
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	grid-row-gap: 20px;
+}
+
+.modal_galerry img{
+	width: 76px;
+	height: 102px;
+}
+
+.modal_wrapper > hr{
+	position: absolute;
+	bottom: 119px;
+	width: 420px;
+}
+
+.modal_wrapper > #btn_photo{
+	position: absolute;
+	bottom: 54px;
+	background-color: #1D6154;
+	width: 237px;
+	height: 36px;
+	border-radius: 50px;
+	left: 50%;
+	transform: translateX(-50%);
+	color: white;
+	font-weight: 700;
+	font-size: 14px;
+	cursor: pointer;
+	border: none;
+}

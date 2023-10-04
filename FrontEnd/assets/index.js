@@ -170,7 +170,7 @@ window.addEventListener("keydown", function (e) {
 
 
 
-//Création de la gallery modal
+//Création de la gallery modal en recupérant les img de l'API
 let imgProjects = [];
 
 fetch("http://localhost:5678/api/works")
@@ -190,11 +190,18 @@ function imgModalGalerry(datas) {
   })
 }
 
+// Ajout des img des travaux dans la modale
 let modalWrapper = document.querySelector('.modal_wrapper');
 let modalGalerry = document.createElement("div");
 
 modalWrapper.appendChild(modalGalerry);
 modalGalerry.classList.add("modal_galerry");
+
+
+// Création du bouton de la modal 
+// let btnModal = document.createElement('button');
+// btnModal.classList.add('btn_modal');
+// modalWrapper.appendChild(btnModal).innerText = "Ajouter une photo";
 
 
 

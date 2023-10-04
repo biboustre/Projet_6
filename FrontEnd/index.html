@@ -9,6 +9,14 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer">
+	<script defer src="assets/index.js"></script>
+
 </head>
 <body>
 <header>
@@ -36,15 +44,20 @@
 	</section>
 
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<a href="#modale" class="js-modale">Modifier</a>
+		<div class="head_portfolio">
+			<h2>Mes Projets</h2> 
+			<i class="fa-regular fa-pen-to-square"></i>
+			<a href="#modale" class="js-modale">Modifier</a>
+		</div>
+		
+		
 
 		<aside id="modale" class="modal" aria-hidden="true" role="dialog" style="display: none;">
-
 			<div class="modal_wrapper js-stop-modale">
 				<button class="js-close-modale"><i class="fa-solid fa-xmark"></i></button>
 				<h1 class="title_modale">Galerie photo</h1>
-
+				<hr>
+				<button id="btn_photo">Ajouter une photo</button>
 			</div>
 		</aside>
 
@@ -73,6 +86,5 @@
 	</nav>
 </footer>
 
-<script src="assets/index.js"></script>
 </body>
 </html>
