@@ -41,6 +41,7 @@ document.querySelector("#portfolio").appendChild(travauxFiltrer);
 
 
 
+
 // Filtrer les travaux
 function filtreCategory(id, datas) {
   if (id == 0) {
@@ -75,6 +76,8 @@ for (category in Categories) {
     displayGallery(filtreCategory(this.dataset.id, projects));
   });
   document.querySelector(".filter_travaux").appendChild(categorie);
+  categorie.style.cursor = "pointer";
+
 }
 
 
