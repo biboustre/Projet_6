@@ -8,6 +8,8 @@ fetch("http://localhost:5678/api/works")
     displayGallery(projects);
   });
 
+  
+// Création de la galerry
 function displayGallery(datas) {
   document.querySelector(".gallery").innerHTML = "";
   datas.forEach((projet) => {
@@ -20,26 +22,26 @@ function displayGallery(datas) {
     fig.appendChild(img);
     fig.appendChild(description);
     document.querySelector(".gallery").appendChild(fig);
+
   });
 }
 
 console.log("je suis 2ème");
+
+
+
+
 
 //Création des categories
 let travauxFiltrer = document.createElement("div");
 travauxFiltrer.classList.add("filter_travaux");
 document.querySelector("#portfolio").appendChild(travauxFiltrer);
 
-//boucle pour crre les bouttons
-// for (let i = 0; i < 4; i++) {
-//     const categorie = document.createElement('button');
-//     categorie.className = 'select';
-//     categorie.id = 'select' +i;
-//     document.querySelector('.filter_travaux').appendChild(categorie);
 
-// }
 
-//Filtrer les travaux
+
+
+// Filtrer les travaux
 function filtreCategory(id, datas) {
   if (id == 0) {
     return datas;
@@ -47,13 +49,22 @@ function filtreCategory(id, datas) {
   return datas.filter((data) => data.categoryId == id);
 }
 
-// mettre dynamique
+
 let Categories = {
   0: "Tous",
   1: "Objets",
   2: "Appartements",
   3: "Hôtel & restaurants",
 };
+
+// let Categories = fetch("http://localhost:5678/api/categories")
+//     .then((res) => res.json()
+//     .then((data) => {
+
+//     } )
+// );
+
+// console.log(Categories);
 
 for (category in Categories) {
   const categorie = document.createElement("button");
@@ -66,22 +77,18 @@ for (category in Categories) {
   document.querySelector(".filter_travaux").appendChild(categorie);
 }
 
-// for (let i = 0; i < lesCategorys.length; i++) {
-//     const category = lesCategorys[i];
-//     document.querySelector('#select').innerText = category;
-//     console.log(category);
-// }
 
-// // nom des cat dans les  boutons
-// document.querySelector("#select0").innerText = "Tous";
-// document.querySelector("#select1").innerText = "Objets";
-// document.querySelector("#select2").innerText = "Appartements";
-// document.querySelector("#select3").innerText = "Hôtels & restaurants";
+
+
+
+
 
 //Création de la gallery
 let gallery = document.createElement("div");
 gallery.classList.add("gallery");
 document.getElementById("portfolio").appendChild(gallery);
+
+
 
 
 
@@ -95,35 +102,9 @@ for (let i = 0; i < 4; i++) {
   lien.appendChild(li);
 }
 
-// envoi des données saisie dans la page de connexion
-fetch("http://localhost:5678/users/login", {
-  method: "POST",
-  headers: { "Content-Type": "application/json", Authorization: "token" },
-  body: {
-    userId: 1,
-    token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY5NTY1MDIzOCwiZXhwIjoxNjk1NzM2NjM4fQ.OxMUB8ctuWaJr-Q9T28pvtBdheG20jtuFR2vSaTsDic",
-  },
-});
 
-const btnConnexion = document.querySelector("form");
 
-btnConnexion.addEventListener("submit", function (event) {
-  event.preventDefault();
 
-  const connexion = {
-    adresseMail: event.target.querySelector("[name=email]").value,
-    password: event.target.querySelector("[name=mot_de_passe]").value,
-  };
-
-  const chargeUtile = JSON.stringify(connexion);
-
-  fetch("http://localhost:5678/users/login", {
-    method: "POST",
-    headers: { "content-Type": "application/json" },
-    body: chargeUtile,
-  });
-});
 
 //Affichage de la modale---------------------------
 let modale = null;
@@ -144,13 +125,16 @@ const openModale = function (e) {
     .addEventListener("click", stopPropagation);
 };
 
+
+
+// Fermeture de la modale---------------------------
 const closeModale = function (e) {
   if (modale === null) return;
   e.preventDefault();
   modale.style.display = "none";
   modale.setAttribute("aria-hidden", "true");
   modale.removeAttribute("aria-modale");
-  // modale.removeEventListener('click', closeModale);é
+  // modale.removeEventListener('click', closeModale);
   modale
     .querySelector(".js-close-modale")
     .removeEventListener("click", closeModale);
@@ -160,15 +144,21 @@ const closeModale = function (e) {
   modale = null;
 };
 
-//Ne ferme pas la modale quand on click dessus
+
+
+
+
+// //Ne ferme pas la modale quand on click dessus
 const stopPropagation = function (e) {
   e.stopPropagation();
 };
+
 
 //Lien qui ouvre la boîte modale
 document.querySelectorAll(".js-modale").forEach((a) => {
   a.addEventListener("click", openModale);
 });
+
 
 //Fermer la modale en appuyant sur Echap
 window.addEventListener("keydown", function (e) {
@@ -176,3 +166,37 @@ window.addEventListener("keydown", function (e) {
     closeModale(e);
   }
 });
+
+
+
+
+//Création de la gallery modal
+let imgProjects = [];
+
+fetch("http://localhost:5678/api/works")
+.then((res) => res.json())
+  .then((data) => {
+    imgProjects = data;
+    imgModalGalerry(imgProjects);
+  })
+
+
+function imgModalGalerry(datas) {
+  datas.forEach((imgProjet) => {
+    let img = document.createElement('img');
+    img.src = imgProjet.imageUrl;
+    img.alt = imgProjet.title;
+    document.querySelector('.modal_galerry').appendChild(img);
+  })
+}
+
+let modalWrapper = document.querySelector('.modal_wrapper');
+let modalGalerry = document.createElement("div");
+
+modalWrapper.appendChild(modalGalerry);
+modalGalerry.classList.add("modal_galerry");
+
+
+
+
+
