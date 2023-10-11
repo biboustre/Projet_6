@@ -70,7 +70,7 @@ let Categories = {
 for (category in Categories) {
   const categorie = document.createElement("button");
   categorie.innerText = Categories[category];
-  categorie.className = "select fliter";
+  categorie.className = "select filter";
   categorie.dataset.id = category;
   categorie.addEventListener("click", function () {
     displayGallery(filtreCategory(this.dataset.id, projects));
@@ -95,8 +95,6 @@ document.getElementById("portfolio").appendChild(gallery);
 
 
 
-
-
 //Ajout des balise <a> pour les liens de la <nav>
 for (let i = 0; i < 4; i++) {
   const lien = document.createElement("a");
@@ -104,6 +102,12 @@ for (let i = 0; i < 4; i++) {
   const li = document.querySelector("li");
   lien.appendChild(li);
 }
+
+
+
+
+
+//-------------------------------------------------------------------
 
 
 
@@ -126,6 +130,8 @@ const openModale = function (e) {
   modale
     .querySelector(".js-stop-modale")
     .addEventListener("click", stopPropagation);
+  imgModalGalerry(projects);
+
 };
 
 
@@ -150,10 +156,10 @@ const closeModale = function (e) {
 
 
 
-
 // //Ne ferme pas la modale quand on click dessus
 const stopPropagation = function (e) {
   e.stopPropagation();
+
 };
 
 
@@ -167,29 +173,36 @@ document.querySelectorAll(".js-modale").forEach((a) => {
 window.addEventListener("keydown", function (e) {
   if (e.key === "Escape" || e.key === "Esc") {
     closeModale(e);
+    closeModale2(e);
   }
 });
 
 
 
 
-//Création de la gallery modal en recupérant les img de l'API
-let imgProjects = [];
-
-fetch("http://localhost:5678/api/works")
-.then((res) => res.json())
-  .then((data) => {
-    imgProjects = data;
-    imgModalGalerry(imgProjects);
-  })
 
 
+
+
+
+
+//Création de la gallery modal en recupérant les img de l'API & insertion des corbeilles
 function imgModalGalerry(datas) {
   datas.forEach((imgProjet) => {
+    let parent_img = document.createElement('div');
+    parent_img.classList.add('parent_img');
+    document.querySelector('.modal_galerry').appendChild(parent_img);
     let img = document.createElement('img');
+    img.classList.add('img_modal_1');
     img.src = imgProjet.imageUrl;
     img.alt = imgProjet.title;
-    document.querySelector('.modal_galerry').appendChild(img);
+    parent_img.appendChild(img);
+    let icon = document.querySelector('.icon_modal');
+    let fondNoir = document.createElement('div');
+    fondNoir.classList.add('fond_noir');
+    parent_img.appendChild(fondNoir);
+    fondNoir.appendChild(icon);
+    
   })
 }
 
@@ -201,12 +214,66 @@ modalWrapper.appendChild(modalGalerry);
 modalGalerry.classList.add("modal_galerry");
 
 
-// Création du bouton de la modal 
-// let btnModal = document.createElement('button');
-// btnModal.classList.add('btn_modal');
-// modalWrapper.appendChild(btnModal).innerText = "Ajouter une photo";
+// Ajout des icon corbeilles sur img
 
 
 
+
+
+//Modale numéro 2 pour ajout de photo
+let modale2 = null;
+document.querySelector('.hidd').style.display = "none"; 
+
+const openModale2 = function (e) {
+  e.preventDefault();
+  const target2 = document.querySelector(e.target.getAttribute("href"));
+  target2.style.display = null;
+  target2.removeAttribute("aria-hidden");
+  target2.setAttribute("aria-modale", "true");
+  modale2 = target2;
+  modale2.addEventListener("click", closeModale2);
+  modale2
+    .querySelector(".js-close-modale_2")
+    .addEventListener("click", closeModale2);
+  modale2
+    .querySelector(".js-stop-modale_2")
+    .addEventListener("click", stopPropagation);
+};
+
+
+
+// Fermeture de la modale---------------------------
+const closeModale2 = function (e) {
+  if (modale2 === null) return;
+  e.preventDefault();
+  modale2.style.display = "none";
+  modale2.setAttribute("aria-hidden", "true");
+  modale2.removeAttribute("aria-modale");
+  // modale.removeEventListener('click', closeModale);
+  modale2
+    .querySelector(".js-close-modale_2")
+    .removeEventListener("click", closeModale2);
+  modale2
+    .querySelector(".js-stop-modale_2")
+    .removeEventListener("click", stopPropagation2);
+  modale2 = null;
+};
+
+
+
+
+
+// //Ne ferme pas la modale quand on click dessus
+const stopPropagation2 = function (e) {
+  e.stopPropagation2();
+};
+
+
+//Lien qui ouvre la boîte modale  2
+document.querySelectorAll(".js-modale2").forEach((a) => {
+  a.addEventListener("click", openModale2 /*function() {
+    // document.querySelector('.modal').style.display = "none";
+  }*/);
+});
 
 

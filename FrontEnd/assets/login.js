@@ -17,17 +17,49 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
       redirect: "follow",
     };
 
+  let submitJs = document.querySelector('#submit_JS');
+  let modEdit = document.querySelector('.mode_edition');
+    
+  submitJs.addEventListener('click', () => {
+    if(getComputedStyle(modEdit).display != "none"){
+      modEdit.style.display = "none";
+    }else{
+      modEdit.style.display = "block";
+    }
+  });
+
+    
+    
+
     fetch("http://localhost:5678/api/users/login", requestOptions)
-      .then((response) => response.text())
+      .then((response) => {
+        if(response.status == 200){
+          return response.json();
+        }
+        // Afficher l'erreur dans le html
+
+      } )
       .then((result) => {
         //stockage du token dans le local storage
-        //redirect vers la page d'accueil
-        document.location.href = "index.html";
-        console.log(result)
+          localStorage.setItem(
+           "token",
+            result.token
+          );
+          
+          //redirect vers la page d'accueil
+          document.location.href = "index.html";
+          console.log(result);
       })
       .catch((error) => {
         //styliser dans le html le message d'erreur
          console.log("error", error);
       });
+      
+    });
 
-});
+
+
+
+
+    
+    
