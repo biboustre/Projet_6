@@ -19,11 +19,9 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
 
   let submitJs = document.querySelector('#submit_JS');
   let modEdit = document.querySelector('.mode_edition');
-    
+
   submitJs.addEventListener('click', () => {
-    if(getComputedStyle(modEdit).display != "none"){
-      modEdit.style.display = "none";
-    }else{
+    if(getComputedStyle(modEdit).display == "none"){
       modEdit.style.display = "block";
     }
   });
