@@ -4,12 +4,12 @@ fetch("http://localhost:5678/api/works")
   .then((res) => res.json())
   .then((data) => {
     projects = data;
-    console.log("je suis 1er");
     displayGallery(projects);
   });
 
   
-// Création de la galerry
+
+// Création de la galerry-------------------------------------------------------
 function displayGallery(datas) {
   document.querySelector(".gallery").innerHTML = "";
   datas.forEach((projet) => {
@@ -26,13 +26,13 @@ function displayGallery(datas) {
   });
 }
 
-console.log("je suis 2ème");
 
 
 
 
 
-//Création des categories
+
+//Création des categories-------------------------------------------------
 let travauxFiltrer = document.createElement("div");
 travauxFiltrer.classList.add("filter_travaux");
 document.querySelector("#portfolio").appendChild(travauxFiltrer);
@@ -42,7 +42,7 @@ document.querySelector("#portfolio").appendChild(travauxFiltrer);
 
 
 
-// Filtrer les travaux
+// Filtrer les travaux------------------------------------------------------
 function filtreCategory(id, datas) {
   if (id == 0) {
     return datas;
@@ -86,7 +86,7 @@ for (category in Categories) {
 
 
 
-//Création de la gallery
+//Création de la gallery--------------------------------------------------------
 let gallery = document.createElement("div");
 gallery.classList.add("gallery");
 document.getElementById("portfolio").appendChild(gallery);
@@ -95,7 +95,10 @@ document.getElementById("portfolio").appendChild(gallery);
 
 
 
-//Ajout des balise <a> pour les liens de la <nav>
+
+
+
+//Ajout des balise <a> pour les liens de la <nav>-------------------------------
 for (let i = 0; i < 4; i++) {
   const lien = document.createElement("a");
   document.querySelector("ul").appendChild(lien);
@@ -113,7 +116,7 @@ for (let i = 0; i < 4; i++) {
 
 
 
-//Affichage de la modale---------------------------
+//Affichage de la modale----------------------------------------------------
 let modale = null;
 
 const openModale = function (e) {
@@ -123,20 +126,20 @@ const openModale = function (e) {
   target.removeAttribute("aria-hidden");
   target.setAttribute("aria-modale", "true");
   modale = target;
-  modale.addEventListener("click", closeModale);
+  modale.addEventListener("mousedown", closeModale);
   modale
     .querySelector(".js-close-modale")
-    .addEventListener("click", closeModale);
+    .addEventListener("mousedown", closeModale);
   modale
     .querySelector(".js-stop-modale")
-    .addEventListener("click", stopPropagation);
+    .addEventListener("mousedown", stopPropagation);
   imgModalGalerry(projects);
 
 };
 
 
 
-// Fermeture de la modale---------------------------
+// Fermeture de la modale-----------------------------------------------------
 const closeModale = function (e) {
   if (modale === null) return;
   e.preventDefault();
@@ -156,20 +159,20 @@ const closeModale = function (e) {
 
 
 
-// //Ne ferme pas la modale quand on click dessus
+// //Ne ferme pas la modale quand on click dessus-------------------------------
 const stopPropagation = function (e) {
   e.stopPropagation();
 
 };
 
 
-//Lien qui ouvre la boîte modale
+//Lien qui ouvre la boîte modale------------------------------------------------
 document.querySelectorAll(".js-modale").forEach((a) => {
   a.addEventListener("click", openModale);
 });
 
 
-//Fermer la modale en appuyant sur Echap
+//Fermer les modales en appuyant sur Echap--------------------------------------
 window.addEventListener("keydown", function (e) {
   if (e.key === "Escape" || e.key === "Esc") {
     closeModale(e);
@@ -179,34 +182,7 @@ window.addEventListener("keydown", function (e) {
 
 
 
-
-
-
-
-
-
-
-//Création de la gallery modal en recupérant les img de l'API & insertion des corbeilles
-function imgModalGalerry(datas) {
-  datas.forEach((imgProjet) => {
-    let parent_img = document.createElement('div');
-    parent_img.classList.add('parent_img');
-    document.querySelector('.modal_galerry').appendChild(parent_img);
-    let img = document.createElement('img');
-    img.classList.add('img_modal_1');
-    img.src = imgProjet.imageUrl;
-    img.alt = imgProjet.title;
-    parent_img.appendChild(img);
-    let icon = document.querySelector('.icon_modal');
-    let fondNoir = document.createElement('div');
-    fondNoir.classList.add('fond_noir');
-    parent_img.appendChild(fondNoir);
-    fondNoir.appendChild(icon);
-    
-  })
-}
-
-// Ajout des img des travaux dans la modale
+// Ajout des img des travaux dans la modale-------------------------------------
 let modalWrapper = document.querySelector('.modal_wrapper');
 let modalGalerry = document.createElement("div");
 
@@ -214,13 +190,10 @@ modalWrapper.appendChild(modalGalerry);
 modalGalerry.classList.add("modal_galerry");
 
 
-// Ajout des icon corbeilles sur img
 
 
 
-
-
-//Modale numéro 2 pour ajout de photo
+//Modale numéro 2 pour ajout de photo-------------------------------------------
 let modale2 = null;
 document.querySelector('.hidd').style.display = "none"; 
 
@@ -231,18 +204,18 @@ const openModale2 = function (e) {
   target2.removeAttribute("aria-hidden");
   target2.setAttribute("aria-modale", "true");
   modale2 = target2;
-  modale2.addEventListener("click", closeModale2);
+  modale2.addEventListener("mousedown", closeModale2);
   modale2
-    .querySelector(".js-close-modale_2")
-    .addEventListener("click", closeModale2);
+  .querySelector(".js-close-modale_2")
+  .addEventListener("mousedown", closeModale2);
   modale2
-    .querySelector(".js-stop-modale_2")
-    .addEventListener("click", stopPropagation);
+  .querySelector(".js-stop-modale_2")
+  .addEventListener("mousedown", stopPropagation);
 };
 
 
 
-// Fermeture de la modale---------------------------
+// Fermeture de la modale------------------------------------------------------
 const closeModale2 = function (e) {
   if (modale2 === null) return;
   e.preventDefault();
@@ -251,25 +224,22 @@ const closeModale2 = function (e) {
   modale2.removeAttribute("aria-modale");
   // modale.removeEventListener('click', closeModale);
   modale2
-    .querySelector(".js-close-modale_2")
-    .removeEventListener("click", closeModale2);
+  .querySelector(".js-close-modale_2")
+  .removeEventListener("click", closeModale2);
   modale2
-    .querySelector(".js-stop-modale_2")
-    .removeEventListener("click", stopPropagation2);
+  .querySelector(".js-stop-modale_2")
+  .removeEventListener("click", stopPropagation2);
   modale2 = null;
 };
 
 
-
-
-
-// //Ne ferme pas la modale quand on click dessus
+// //Ne ferme pas la modale quand on click dessus-------------------------------
 const stopPropagation2 = function (e) {
   e.stopPropagation2();
 };
 
 
-//Lien qui ouvre la boîte modale  2
+//Lien qui ouvre la boîte modale  2---------------------------------------
 document.querySelectorAll(".js-modale2").forEach((a) => {
   a.addEventListener("click", openModale2 /*function() {
     // document.querySelector('.modal').style.display = "none";
@@ -277,3 +247,131 @@ document.querySelectorAll(".js-modale2").forEach((a) => {
 });
 
 
+
+
+
+// -----------------------------------------------------------------------------
+
+
+
+
+
+//Création de la gallery modal en recupérant les img de l'API & insertion des corbeilles
+function imgModalGalerry(datas) {
+  modalGalerry.innerHTML = "";
+  datas.forEach((imgProjet) => {
+    let parent_img = document.createElement('div');
+    parent_img.classList.add('parent_img');
+    parent_img.dataset.id = imgProjet.id;
+    modalGalerry.appendChild(parent_img);
+    let imgModal = document.createElement('img');
+    imgModal.classList.add('img_modal_1');
+    imgModal.src = imgProjet.imageUrl;
+    imgModal.alt = imgProjet.title;
+    parent_img.appendChild(imgModal);
+    modalGalerry.appendChild(parent_img);
+    let fondNoir = document.createElement('button');
+    fondNoir.classList.add('fond_noir');
+    parent_img.appendChild(fondNoir);
+    fondNoir.style.border = "none";
+    fondNoir.style.cursor = "pointer";
+    let iconCorbeille = document.createElement('i');
+    iconCorbeille.classList.add('fa-solid', 'fa-trash-can');
+    fondNoir.appendChild(iconCorbeille);
+   
+  })
+
+};
+
+
+
+// suprimer une photo-----------------------------------------------------------
+modalGalerry.addEventListener('click', function(event){
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
+
+
+  const requestOption = {
+    method: 'DELETE',
+    headers: myHeaders,
+    redirect: 'follow',
+  }
+
+  if(event.target.classList.contains('fa-solid', 'fa-trash-can')) {
+    const parent = event.target.closest('div');
+    const imgId = parent.dataset.id; 
+    fetch(`http://localhost:5678/api/works/${imgId}`, requestOption)
+    .then(function(response) {
+      if(response.ok){
+        imgModalGalerry(projects);
+      }else{
+        console.error('erreur supression');
+      }
+    })
+    .catch(function(error){
+      console.error('erreur surpression', error);
+    });
+  }
+});
+
+
+
+// ==========================================================================
+
+
+// Ajout photos PAS ENCORE FAIT 
+modalGalerry.addEventListener('click', function(event){
+  var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+myHeaders.append("Authorization", "Bearer "+ localStorage.getItem('token'));
+
+// let leBody = ;
+
+const requestOption = {
+  method: 'POST',
+  headers: myHeaders,
+  body: ,
+  redirect: 'follow',
+}
+
+  if(event.target.classList.contains()) {
+    
+    fetch("http://localhost:5678/api/works", requestOption)
+    .then(function(response) {
+      if(response.ok){
+        
+      }else{
+        
+      }
+    })
+    .catch(function(error){
+      
+    });
+  }
+});
+
+
+
+// Création de la barre mode edition et du boutton modifier de la modal avec leurs icons
+// let modEdit = document.createElement('div');
+// modEdit.classList.add('mode_edition');
+// let header = document.querySelector('header');
+// header.appendChild(modEdit);
+// let iconModEdit = document.createElement('i');
+// iconModEdit.classList.add('fa-regular', 'fa-pen-to-square');
+// let pModEdit = document.createElement('p');
+// pModEdit.innerText = "Mode édition";
+// modEdit.appendChild(iconModEdit);
+// modEdit.appendChild(pModEdit);
+let modEdit = document.querySelector('.mode_edition');
+
+
+//Appartition des élément lors de la connexion-------------------------------
+if (localStorage.getItem('token')) {
+  modEdit.style.display = "flex";
+  document.querySelector('.js-modale').style.display = "block";
+
+}

@@ -18,11 +18,14 @@
 	<script defer src="assets/index.js"></script>
 </head>
 <body>
-<header>
+
 	<div class="mode_edition">
 		<i class="fa-regular fa-pen-to-square"></i>
 		<p>Mode édition</p>
 	</div>
+	
+<header>
+	
 
 	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
 	<nav>
@@ -60,7 +63,6 @@
 			<div class="modal_wrapper js-stop-modale">
 				<button class="js-close-modale"><i class="fa-solid fa-xmark"></i></button>
 				<h1 class="title_modale">Galerie photo</h1>
-				<i class="icon_modal fa-solid fa-trash-can"></i>
 				<hr>
 				<button id="btn_photo"><a href="#modale_2" class="js-modale2">Ajouter une photo</a></button>
 			</div>
@@ -83,11 +85,14 @@
 					</button>
 					<p class="taille-img">jpg, png : 4mo max</p>
 				</section>
-				<form class="form_modale_2" action="post">
+				<form class="form_modale_2" action="#" method="post">
 					<label for="title">Titre</label>
 					<input type="text" name="title" id="title">
 					<label for="categorie">Catégorie</label>
-					<input type="text" name="categorie" id="categorie">
+					<select name="categories" id="categories" >
+						
+					</select>
+					<!-- <input type="text" name="categorie" id="categorie"> -->
 				</form>
 				<hr>
 				<button class="btn_valider"><a href="">Valider</a></button>
@@ -120,6 +125,8 @@
 		</ul>
 	</nav>
 </footer>
+
+
 
 </body>
 </html>

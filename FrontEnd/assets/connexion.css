@@ -162,3 +162,12 @@ a{
 	color: #3D3D3D;
 }
 
+
+#erreur{
+	display: none;
+	position: absolute;
+	top: 545px;
+	color: red;
+	font-weight: bold;
+	font-size: 15px;
+}
