@@ -32,16 +32,11 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
   .then((result) => {
     //stockage du token dans le local storage
     localStorage.setItem(
-      "token",
-            result.token
-            );
+      "token", result.token
+      );
             
             //redirect vers la page d'accueil
             document.location.href = "index.html";
-            let modEdit = document.querySelector('.mode_edition');
-            modEdit.style.display = 'block';
-            let logout = document.querySelector('.logout');
-            logout.style.display = "block";
             console.log(result);
       })
       // .catch((error) => {
@@ -50,3 +45,10 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
       // });
       
     });
+
+    // let logout = document.querySelector('.logout');
+
+
+    // logout.addEventListener('click', function(){
+    //   localStorage.removeItem("token");
+    // })

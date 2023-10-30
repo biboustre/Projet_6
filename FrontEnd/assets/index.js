@@ -241,9 +241,7 @@ const stopPropagation2 = function (e) {
 
 //Lien qui ouvre la boîte modale  2---------------------------------------
 document.querySelectorAll(".js-modale2").forEach((a) => {
-  a.addEventListener("click", openModale2 /*function() {
-    // document.querySelector('.modal').style.display = "none";
-  }*/);
+  a.addEventListener("click", openModale2 );
 });
 
 
@@ -254,12 +252,33 @@ document.querySelectorAll(".js-modale2").forEach((a) => {
 
 //Appartition des élément lors de la connexion-------------------------------
 let modEdit = document.querySelector('.mode_edition');
+let logoModif = document.querySelector('#logo_modif');
+
 if (localStorage.getItem('token')) {
   modEdit.style.display = "flex";
   document.querySelector('.js-modale').style.display = "block";
+  logoModif.style.display = "block";
+}
+
+let logout = document.querySelector('.logout');
+let login = document.querySelector('.login');
+
+if (localStorage.getItem('token')) {
+  logout.style.display = "block";
+  login.style.display = "none";
 
 }
 
+
+//Function pour se deconnecter du compte et effacer le contenu qui apparait seulement lots de la connexion
+logout.addEventListener('click', function(){
+  localStorage.removeItem("token");
+  logout.style.display = "none";
+  login.style.display = "block";
+  modEdit.style.display = "none";
+  document.querySelector('.js-modale').style.display = "none";
+  logoModif.style.display = "none";
+});
 
 
 //Création de la gallery modal en recupérant les img de l'API & insertion des corbeilles
@@ -296,7 +315,6 @@ function imgModalGalerry(datas) {
 modalGalerry.addEventListener('click', function(event){
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-
   myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
 
 
@@ -309,6 +327,7 @@ modalGalerry.addEventListener('click', function(event){
   if(event.target.classList.contains('fa-solid', 'fa-trash-can')) {
     const parent = event.target.closest('div');
     const imgId = parent.dataset.id; 
+
     fetch(`http://localhost:5678/api/works/${imgId}`, requestOption)
     .then(function(response) {
       if(response.ok){
@@ -330,9 +349,7 @@ modalGalerry.addEventListener('click', function(event){
 
 
 
-
-
-// Ajout photos
+// Ajout photos test n°1
 // let btnValider = document.querySelector('.btn_valider');
 
 // btnValider.addEventListener('click', function(event){
@@ -340,8 +357,6 @@ modalGalerry.addEventListener('click', function(event){
 // const myHeaders = new Headers();
 // myHeaders.append("Content-Type", "application/json");
 // myHeaders.append("Authorization", "Bearer" + localStorage.getItem('token'));
-
-
 
 // const requestOptions = {
 //   method: 'POST',
@@ -360,7 +375,6 @@ modalGalerry.addEventListener('click', function(event){
 //     id: document.querySelector('#categories').value,
 //   })
 //  })
-
 // // .then((response) => response.json())
 // // .then((json) => console.log(json)) 
 // .then(function(response){
@@ -371,8 +385,6 @@ modalGalerry.addEventListener('click', function(event){
 //     }
 //   })
 // })
-  
-
   // .then(result => console.log(result))
   // .catch(error => console.log('error', error));
 // })
@@ -395,23 +407,15 @@ function listenerAjoutPhoto(){
       };
 
     //Création de la charge utile au format JSON
-    const chargeUtile = JSON.stringify(newPhoto);
+    const body = JSON.stringify(newPhoto);
     //Appel de la fonction fetch avec toutes les informations nécessaire
     fetch('http://localhost:5678/api/works',  {
       method: "POST",
       Headers: myHeaders,
-      body: chargeUtile,
+      body: body,
     });
 
   })
 };
 
 listenerAjoutPhoto();
-
-
-
-
-
-
-
-
