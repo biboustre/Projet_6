@@ -40,6 +40,8 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
             document.location.href = "index.html";
             let modEdit = document.querySelector('.mode_edition');
             modEdit.style.display = 'block';
+            let logout = document.querySelector('.logout');
+            logout.style.display = "block";
             console.log(result);
       })
       // .catch((error) => {

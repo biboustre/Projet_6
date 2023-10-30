@@ -32,7 +32,10 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li><a href="connexion.html">login</a></li>
+			<li>
+				<a class="login" href="connexion.html">login</a>
+				<a class="logout" href="#">logout</a>
+			</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -76,26 +79,34 @@
 				<button class="return-modal-1"><i class="fa-solid fa-arrow-left"></i></button>
 				<button class="js-close-modale_2"><i class="fa-solid fa-xmark"></i></button>
 				<h1 class="title_modale_2">Ajout photo</h1>
-				<section id="ajout-photo-modal">
-					<div id="icon-photo">
-						<i class="fa-regular fa-image"></i>
-					</div>
-					<button class="btn-ajout-photo">
-						<p>+  Ajouter une photo</p>
-					</button>
-					<p class="taille-img">jpg, png : 4mo max</p>
-				</section>
-				<form class="form_modale_2" action="#" method="post">
-					<label for="title">Titre</label>
+
+				<form class="form_modale_2" action="" method="POST">
+					<section id="ajout-photo-modal">
+						<div id="icon-photo">
+							<i class="fa-regular fa-image"></i>
+						</div>
+
+							<label for="file" class="label_file"><p>+ ajouter une photo</p></label>
+							<input id="file" type="file" class="btn-ajout-photo">
+						
+						<p class="taille-img">jpg, png : 4mo max</p>
+					</section>
+					<label for="title" id="title">Titre</label>
 					<input type="text" name="title" id="title">
 					<label for="categorie">Catégorie</label>
 					<select name="categories" id="categories" >
-						
+						<!-- <option value="" disabled selected hidden>Choisissez l'id de la catégorie</option> -->
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
 					</select>
+					
+					<hr>
+				<button class="btn_valider">Valider</button>
 					<!-- <input type="text" name="categorie" id="categorie"> -->
 				</form>
-				<hr>
-				<button class="btn_valider"><a href="">Valider</a></button>
+				
+				
 			</div>
 		</aside>
 

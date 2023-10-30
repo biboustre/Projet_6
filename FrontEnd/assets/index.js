@@ -252,7 +252,13 @@ document.querySelectorAll(".js-modale2").forEach((a) => {
 
 // -----------------------------------------------------------------------------
 
+//Appartition des élément lors de la connexion-------------------------------
+let modEdit = document.querySelector('.mode_edition');
+if (localStorage.getItem('token')) {
+  modEdit.style.display = "flex";
+  document.querySelector('.js-modale').style.display = "block";
 
+}
 
 
 
@@ -282,6 +288,7 @@ function imgModalGalerry(datas) {
   })
 
 };
+
 
 
 
@@ -321,57 +328,90 @@ modalGalerry.addEventListener('click', function(event){
 // ==========================================================================
 
 
-// Ajout photos PAS ENCORE FAIT 
-modalGalerry.addEventListener('click', function(event){
-  var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
 
-myHeaders.append("Authorization", "Bearer "+ localStorage.getItem('token'));
 
-// let leBody = ;
 
-const requestOption = {
-  method: 'POST',
-  headers: myHeaders,
-  body: ,
-  redirect: 'follow',
-}
 
-  if(event.target.classList.contains()) {
-    
-    fetch("http://localhost:5678/api/works", requestOption)
-    .then(function(response) {
-      if(response.ok){
-        
-      }else{
-        
-      }
-    })
-    .catch(function(error){
-      
+// Ajout photos
+// let btnValider = document.querySelector('.btn_valider');
+
+// btnValider.addEventListener('click', function(event){
+//   event.preventDefault();
+// const myHeaders = new Headers();
+// myHeaders.append("Content-Type", "application/json");
+// myHeaders.append("Authorization", "Bearer" + localStorage.getItem('token'));
+
+
+
+// const requestOptions = {
+//   method: 'POST',
+//   headers: myHeaders,
+  // body: JSON.stringify({
+  //   title: document.querySelector('#title').value,
+  //   id: document.querySelector('#categories').value,
+  // }),
+//   redirect: 'follow',
+// };
+
+//  fetch("http://localhost:5678/api/works", requestOptions, {
+//   body: JSON.stringify({
+//     imageUrl: document.querySelector('#file').value,
+//     title: document.querySelector('#title').value,
+//     id: document.querySelector('#categories').value,
+//   })
+//  })
+
+// // .then((response) => response.json())
+// // .then((json) => console.log(json)) 
+// .then(function(response){
+//     if(response.ok){
+//       imgModalGalerry(projects);
+//     }else{
+//       console.error("erreur lors de l'ajout");
+//     }
+//   })
+// })
+  
+
+  // .then(result => console.log(result))
+  // .catch(error => console.log('error', error));
+// })
+
+
+//Essaie n°2 ajout photo
+function listenerAjoutPhoto(){
+  const formModal = document.querySelector('.form_modale_2');
+    formModal.addEventListener('submit', function(event){
+      event.preventDefault();
+
+      const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", "Bearer" + localStorage.getItem('token'));
+
+      const newPhoto = {
+        imageUrl: parseInt(event.target.querySelector('#file').value),
+        title: event.target.querySelector('#title').value,
+        id: event.target.querySelector('#categories').value,
+      };
+
+    //Création de la charge utile au format JSON
+    const chargeUtile = JSON.stringify(newPhoto);
+    //Appel de la fonction fetch avec toutes les informations nécessaire
+    fetch('http://localhost:5678/api/works',  {
+      method: "POST",
+      Headers: myHeaders,
+      body: chargeUtile,
     });
-  }
-});
+
+  })
+};
+
+listenerAjoutPhoto();
 
 
 
-// Création de la barre mode edition et du boutton modifier de la modal avec leurs icons
-// let modEdit = document.createElement('div');
-// modEdit.classList.add('mode_edition');
-// let header = document.querySelector('header');
-// header.appendChild(modEdit);
-// let iconModEdit = document.createElement('i');
-// iconModEdit.classList.add('fa-regular', 'fa-pen-to-square');
-// let pModEdit = document.createElement('p');
-// pModEdit.innerText = "Mode édition";
-// modEdit.appendChild(iconModEdit);
-// modEdit.appendChild(pModEdit);
-let modEdit = document.querySelector('.mode_edition');
 
 
-//Appartition des élément lors de la connexion-------------------------------
-if (localStorage.getItem('token')) {
-  modEdit.style.display = "flex";
-  document.querySelector('.js-modale').style.display = "block";
 
-}
+
+
