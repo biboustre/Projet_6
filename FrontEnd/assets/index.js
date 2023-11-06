@@ -7,7 +7,6 @@ fetch("http://localhost:5678/api/works")
     displayGallery(projects);
   });
 
-  
 
 // Création de la galerry-------------------------------------------------------
 function displayGallery(datas) {
@@ -22,24 +21,14 @@ function displayGallery(datas) {
     fig.appendChild(img);
     fig.appendChild(description);
     document.querySelector(".gallery").appendChild(fig);
-
   });
 }
-
-
-
-
-
 
 
 //Création des categories-------------------------------------------------
 let travauxFiltrer = document.createElement("div");
 travauxFiltrer.classList.add("filter_travaux");
 document.querySelector("#portfolio").appendChild(travauxFiltrer);
-
-
-
-
 
 
 // Filtrer les travaux------------------------------------------------------
@@ -50,7 +39,6 @@ function filtreCategory(id, datas) {
   return datas.filter((data) => data.categoryId == id);
 }
 
-
 let Categories = {
   0: "Tous",
   1: "Objets",
@@ -58,15 +46,7 @@ let Categories = {
   3: "Hôtel & restaurants",
 };
 
-// let Categories = fetch("http://localhost:5678/api/categories")
-//     .then((res) => res.json()
-//     .then((data) => {
-
-//     } )
-// );
-
-// console.log(Categories);
-
+//Boucle for pour créer les bouttons des differente categories
 for (category in Categories) {
   const categorie = document.createElement("button");
   categorie.innerText = Categories[category];
@@ -75,15 +55,10 @@ for (category in Categories) {
   categorie.addEventListener("click", function () {
     displayGallery(filtreCategory(this.dataset.id, projects));
   });
-  document.querySelector(".filter_travaux").appendChild(categorie);
+
+  travauxFiltrer.appendChild(categorie);
   categorie.style.cursor = "pointer";
-
-}
-
-
-
-
-
+};
 
 
 //Création de la gallery--------------------------------------------------------
@@ -92,13 +67,7 @@ gallery.classList.add("gallery");
 document.getElementById("portfolio").appendChild(gallery);
 
 
-
-
-
-
-
-
-//Ajout des balise <a> pour les liens de la <nav>-------------------------------
+//Ajout des balises <a> pour les liens de la <nav>-------------------------------
 for (let i = 0; i < 4; i++) {
   const lien = document.createElement("a");
   document.querySelector("ul").appendChild(lien);
@@ -106,23 +75,12 @@ for (let i = 0; i < 4; i++) {
   lien.appendChild(li);
 }
 
-
-
-
-
 //-------------------------------------------------------------------
 
-
-
-
-
 //Affichage de la modale----------------------------------------------------
-let modale = null;
-
-const openModale = function (e) {
-  e.preventDefault();
-  const target = document.querySelector(e.target.getAttribute("href"));
-  target.style.display = null;
+function openModale() {
+  const target = document.querySelector("#modale");
+  target.classList.remove("hidden");
   target.removeAttribute("aria-hidden");
   target.setAttribute("aria-modale", "true");
   modale = target;
@@ -134,43 +92,32 @@ const openModale = function (e) {
     .querySelector(".js-stop-modale")
     .addEventListener("mousedown", stopPropagation);
   imgModalGalerry(projects);
-
-};
-
-
+}
 
 // Fermeture de la modale-----------------------------------------------------
-const closeModale = function (e) {
-  if (modale === null) return;
-  e.preventDefault();
-  modale.style.display = "none";
-  modale.setAttribute("aria-hidden", "true");
-  modale.removeAttribute("aria-modale");
+const closeModale = function () {
+  const target = document.querySelector("#modale");
+  target.classList.add("hidden");
+  target.setAttribute("aria-hidden", "true");
+  target.removeAttribute("aria-modale");
   // modale.removeEventListener('click', closeModale);
-  modale
+  target
     .querySelector(".js-close-modale")
     .removeEventListener("click", closeModale);
-  modale
+  target
     .querySelector(".js-stop-modale")
     .removeEventListener("click", stopPropagation);
-  modale = null;
 };
-
-
-
 
 // //Ne ferme pas la modale quand on click dessus-------------------------------
 const stopPropagation = function (e) {
   e.stopPropagation();
-
 };
-
 
 //Lien qui ouvre la boîte modale------------------------------------------------
 document.querySelectorAll(".js-modale").forEach((a) => {
   a.addEventListener("click", openModale);
 });
-
 
 //Fermer les modales en appuyant sur Echap--------------------------------------
 window.addEventListener("keydown", function (e) {
@@ -180,242 +127,278 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
-
-
 // Ajout des img des travaux dans la modale-------------------------------------
-let modalWrapper = document.querySelector('.modal_wrapper');
+let modalWrapper = document.querySelector(".modal_wrapper");
 let modalGalerry = document.createElement("div");
 
 modalWrapper.appendChild(modalGalerry);
 modalGalerry.classList.add("modal_galerry");
 
-
-
-
-
 //Modale numéro 2 pour ajout de photo-------------------------------------------
 let modale2 = null;
-document.querySelector('.hidd').style.display = "none"; 
 
-const openModale2 = function (e) {
-  e.preventDefault();
-  const target2 = document.querySelector(e.target.getAttribute("href"));
-  target2.style.display = null;
-  target2.removeAttribute("aria-hidden");
-  target2.setAttribute("aria-modale", "true");
-  modale2 = target2;
-  modale2.addEventListener("mousedown", closeModale2);
-  modale2
-  .querySelector(".js-close-modale_2")
-  .addEventListener("mousedown", closeModale2);
-  modale2
-  .querySelector(".js-stop-modale_2")
-  .addEventListener("mousedown", stopPropagation);
+const openModale2 = function () {
+  closeModale();
+  const target = document.querySelector("#modale_2");
+  target.classList.remove("hidden");
+  target.removeAttribute("aria-hidden");
+  target.setAttribute("aria-modale", "true");
+  modale = target;
+  modale.addEventListener("mousedown", closeModale2);
+  modale
+    .querySelector(".js-close-modale_2")
+    .addEventListener("mousedown", closeModale2);
+  modale
+    .querySelector(".js-stop-modale_2")
+    .addEventListener("mousedown", stopPropagation);
+  imgModalGalerry(projects);
 };
-
-
 
 // Fermeture de la modale------------------------------------------------------
 const closeModale2 = function (e) {
-  if (modale2 === null) return;
-  e.preventDefault();
-  modale2.style.display = "none";
-  modale2.setAttribute("aria-hidden", "true");
-  modale2.removeAttribute("aria-modale");
+  const target = document.querySelector("#modale_2");
+  target.classList.add("hidden");
+  target.setAttribute("aria-hidden", "true");
+  target.removeAttribute("aria-modale");
   // modale.removeEventListener('click', closeModale);
-  modale2
-  .querySelector(".js-close-modale_2")
-  .removeEventListener("click", closeModale2);
-  modale2
-  .querySelector(".js-stop-modale_2")
-  .removeEventListener("click", stopPropagation2);
-  modale2 = null;
+  target
+    .querySelector(".js-close-modale_2")
+    .removeEventListener("click", closeModale);
+  target
+    .querySelector(".js-stop-modale_2")
+    .removeEventListener("click", stopPropagation);
 };
-
 
 // //Ne ferme pas la modale quand on click dessus-------------------------------
 const stopPropagation2 = function (e) {
   e.stopPropagation2();
 };
 
-
 //Lien qui ouvre la boîte modale  2---------------------------------------
 document.querySelectorAll(".js-modale2").forEach((a) => {
-  a.addEventListener("click", openModale2 );
+  a.addEventListener("click", openModale2);
 });
 
+let btnReturnModal1 = document.querySelector(".return-modal-1");
 
-
-
+btnReturnModal1.addEventListener("click", (e) => {
+  //btnReturnModal1.innerHTML = openModale;
+  closeModale2();
+  openModale();
+});
 
 // -----------------------------------------------------------------------------
 
-//Appartition des élément lors de la connexion-------------------------------
-let modEdit = document.querySelector('.mode_edition');
-let logoModif = document.querySelector('#logo_modif');
+//Appartition et disparition des élément lors de la connexion-------------------------------
+let modEdit = document.querySelector(".mode_edition");
+let logoModif = document.querySelector("#logo_modif");
 
-if (localStorage.getItem('token')) {
+if (localStorage.getItem("token")) {
   modEdit.style.display = "flex";
-  document.querySelector('.js-modale').style.display = "block";
+  document.querySelector(".js-modale").style.display = "block";
   logoModif.style.display = "block";
 }
 
-let logout = document.querySelector('.logout');
-let login = document.querySelector('.login');
+let logout = document.querySelector(".logout");
+let login = document.querySelector(".login");
 
-if (localStorage.getItem('token')) {
+if (localStorage.getItem("token")) {
   logout.style.display = "block";
   login.style.display = "none";
-
 }
 
-
-//Function pour se deconnecter du compte et effacer le contenu qui apparait seulement lots de la connexion
-logout.addEventListener('click', function(){
+//Function pour se deconnecter du compte et effacer le contenu qui apparait seulement lors de la connexion--------------------
+logout.addEventListener("click", function () {
   localStorage.removeItem("token");
   logout.style.display = "none";
   login.style.display = "block";
   modEdit.style.display = "none";
-  document.querySelector('.js-modale').style.display = "none";
+  document.querySelector(".js-modale").style.display = "none";
   logoModif.style.display = "none";
 });
 
-
-//Création de la gallery modal en recupérant les img de l'API & insertion des corbeilles
+//Création de la gallery modal en recupérant les img de l'API & insertion des corbeilles---------------------------------
 function imgModalGalerry(datas) {
   modalGalerry.innerHTML = "";
   datas.forEach((imgProjet) => {
-    let parent_img = document.createElement('div');
-    parent_img.classList.add('parent_img');
+    let parent_img = document.createElement("div");
+    parent_img.classList.add("parent_img");
     parent_img.dataset.id = imgProjet.id;
     modalGalerry.appendChild(parent_img);
-    let imgModal = document.createElement('img');
-    imgModal.classList.add('img_modal_1');
+    let imgModal = document.createElement("img");
+    imgModal.classList.add("img_modal_1");
     imgModal.src = imgProjet.imageUrl;
     imgModal.alt = imgProjet.title;
     parent_img.appendChild(imgModal);
     modalGalerry.appendChild(parent_img);
-    let fondNoir = document.createElement('button');
-    fondNoir.classList.add('fond_noir');
+    let fondNoir = document.createElement("button");
+    fondNoir.classList.add("fond_noir");
     parent_img.appendChild(fondNoir);
     fondNoir.style.border = "none";
     fondNoir.style.cursor = "pointer";
-    let iconCorbeille = document.createElement('i');
-    iconCorbeille.classList.add('fa-solid', 'fa-trash-can');
+    let iconCorbeille = document.createElement("i");
+    iconCorbeille.classList.add("fa-solid", "fa-trash-can");
     fondNoir.appendChild(iconCorbeille);
-   
-  })
-
-};
-
-
-
+  });
+}
 
 // suprimer une photo-----------------------------------------------------------
-modalGalerry.addEventListener('click', function(event){
+modalGalerry.addEventListener("click", function (event) {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Authorization", "Bearer " + localStorage.getItem('token'));
-
+  myHeaders.append("Authorization", "Bearer " + localStorage.getItem("token"));
 
   const requestOption = {
-    method: 'DELETE',
+    method: "DELETE",
     headers: myHeaders,
-    redirect: 'follow',
-  }
+    redirect: "follow",
+  };
 
-  if(event.target.classList.contains('fa-solid', 'fa-trash-can')) {
-    const parent = event.target.closest('div');
-    const imgId = parent.dataset.id; 
+  if (event.target.classList.contains("fa-solid", "fa-trash-can")) {
+    const parent = event.target.closest("div");
+    const imgId = parent.dataset.id;
 
     fetch(`http://localhost:5678/api/works/${imgId}`, requestOption)
-    .then(function(response) {
-      if(response.ok){
-        imgModalGalerry(projects);
-      }else{
-        console.error('erreur supression');
-      }
-    })
-    .catch(function(error){
-      console.error('erreur surpression', error);
-    });
+      .then(function (response) {
+        if (response.ok) {
+          imgModalGalerry(projects);
+        } else {
+          console.error("erreur supression");
+        }
+      })
+      .catch(function (error) {
+        console.error("erreur surpression", error);
+      });
   }
 });
-
-
 
 // ==========================================================================
 
 
-
-
-// Ajout photos test n°1
-// let btnValider = document.querySelector('.btn_valider');
-
-// btnValider.addEventListener('click', function(event){
-//   event.preventDefault();
-// const myHeaders = new Headers();
-// myHeaders.append("Content-Type", "application/json");
-// myHeaders.append("Authorization", "Bearer" + localStorage.getItem('token'));
-
-// const requestOptions = {
-//   method: 'POST',
-//   headers: myHeaders,
-  // body: JSON.stringify({
-  //   title: document.querySelector('#title').value,
-  //   id: document.querySelector('#categories').value,
-  // }),
-//   redirect: 'follow',
-// };
-
-//  fetch("http://localhost:5678/api/works", requestOptions, {
-//   body: JSON.stringify({
-//     imageUrl: document.querySelector('#file').value,
-//     title: document.querySelector('#title').value,
-//     id: document.querySelector('#categories').value,
-//   })
-//  })
-// // .then((response) => response.json())
-// // .then((json) => console.log(json)) 
-// .then(function(response){
-//     if(response.ok){
-//       imgModalGalerry(projects);
-//     }else{
-//       console.error("erreur lors de l'ajout");
-//     }
-//   })
-// })
-  // .then(result => console.log(result))
-  // .catch(error => console.log('error', error));
-// })
-
-
 //Essaie n°2 ajout photo
-function listenerAjoutPhoto(){
-  const formModal = document.querySelector('.form_modale_2');
-    formModal.addEventListener('submit', function(event){
-      event.preventDefault();
+// function listenerAjoutPhoto() {
+//   const formModal = document.querySelector(".form_modale_2");
+//   formModal.addEventListener("submit", function (event) {
+//     event.preventDefault();
 
-      const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", "Bearer" + localStorage.getItem('token'));
+//     const myHeaders = new Headers();
+//     myHeaders.append("Content-Type", "multipart/form-data");
+//     myHeaders.append("accept", "application/json");
+//     myHeaders.append(
+//       "Authorization",
+//       "Bearer " + localStorage.getItem("token")
+//     );
+//     console.log(localStorage.getItem("token"));
 
-      const newPhoto = {
-        imageUrl: parseInt(event.target.querySelector('#file').value),
-        title: event.target.querySelector('#title').value,
-        id: event.target.querySelector('#categories').value,
-      };
+//     const newPhoto = {
+//       image: event.target.querySelector("#file").value,
+//       title: event.target.querySelector("#title").value,
+//       id: parseInt(event.target.querySelector("#categories").value),
+//     };
 
-    //Création de la charge utile au format JSON
-    const body = JSON.stringify(newPhoto);
-    //Appel de la fonction fetch avec toutes les informations nécessaire
-    fetch('http://localhost:5678/api/works',  {
+   
+//     const requestOptions = {
+//       method: "POST",
+//       headers: myHeaders,
+//       body: newPhoto,
+//     };
+
+//     //Appel de la fonction fetch avec toutes les informations nécessaire
+//     fetch("http://localhost:5678/api/works", requestOptions).then((res) => {
+//       if (res.status == 201) {
+//         return res.json();
+//       }
+//       //Affichage de l'erreur dans html
+//       else {
+//         document.querySelector("#erreur2").style.display = "block";
+         
+//       }
+//     });
+//   });
+// }
+
+
+function listenerAjoutPhoto() {
+  const formModal = document.querySelector(".form_modale_2");
+  formModal.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const formData = new formData();
+    formData.append("Content-Type", "multipart/form-data");
+    formData.append("accept", "application/json");
+    formData.append(
+      "Authorization",
+      "Bearer " + localStorage.getItem("token")
+    );
+    console.log(localStorage.getItem("token"));
+
+    const newPhoto = {
+      image: event.target.querySelector("#file").value,
+      title: event.target.querySelector("#title").value,
+      id: parseInt(event.target.querySelector("#categories").value),
+    };
+
+   
+    const requestOptions = {
       method: "POST",
-      Headers: myHeaders,
-      body: body,
-    });
+      headers: formData,
+      body: newPhoto,
+    };
 
-  })
-};
+    //Appel de la fonction fetch avec toutes les informations nécessaire
+    fetch("http://localhost:5678/api/works", requestOptions).then((res) => {
+      if (res.status == 201) {
+        return res.json();
+      }
+      //Affichage de l'erreur dans html
+      else {
+        document.querySelector("#erreur2").style.display = "block";
+         
+      }
+    });
+  });
+}
+
 
 listenerAjoutPhoto();
+
+
+
+
+//------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------
+
+
+//Function pour afficher l'image ajouter et effacer le contenu après l'ajout de l'image
+function affichageImage() {
+  const fileInput = document.getElementById('file');
+  const file = fileInput.files[0];
+  const imagePreviewContainer = document.getElementById('previewImageContainer');
+
+  if (file.type.match('image.*')) {
+    document.querySelector('#icon-photo').style.display = "none";
+    document.querySelector('.label_file').style.display = "none";
+    document.querySelector('.taille-img').style.display = "none";
+
+    const reader = new FileReader();
+
+    reader.addEventListener('load', function(event) {
+      const imageUrl = event.target.result;
+      const image = new Image();
+
+      image.addEventListener('load', function(){
+        imagePreviewContainer.innerHTML = '';
+        imagePreviewContainer.appendChild(image);
+      });
+
+      image.src = imageUrl;
+      image.style.width = '129px'; 
+      image.style.height = '169px';
+    });
+      
+    reader.readAsDataURL(file);
+    }
+  };
+  
+
+  

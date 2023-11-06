@@ -46,9 +46,3 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
       
     });
 
-    // let logout = document.querySelector('.logout');
-
-
-    // logout.addEventListener('click', function(){
-    //   localStorage.removeItem("token");
-    // })
