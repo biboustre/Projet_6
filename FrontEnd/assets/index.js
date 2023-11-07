@@ -288,12 +288,12 @@ modalGalerry.addEventListener("click", function (event) {
 //       "Authorization",
 //       "Bearer " + localStorage.getItem("token")
 //     );
-//     console.log(localStorage.getItem("token"));
+//     // console.log(localStorage.getItem("token"));
 
 //     const newPhoto = {
 //       image: event.target.querySelector("#file").value,
 //       title: event.target.querySelector("#title").value,
-//       id: parseInt(event.target.querySelector("#categories").value),
+//       category: parseInt(event.target.querySelector("#categories").value),
 //     };
 
    
@@ -315,7 +315,7 @@ modalGalerry.addEventListener("click", function (event) {
 //       }
 //     });
 //   });
-// }
+// };
 
 
 function listenerAjoutPhoto() {
@@ -324,25 +324,29 @@ function listenerAjoutPhoto() {
     event.preventDefault();
 
     const formData = new formData();
-    formData.append("Content-Type", "multipart/form-data");
-    formData.append("accept", "application/json");
-    formData.append(
-      "Authorization",
-      "Bearer " + localStorage.getItem("token")
-    );
-    console.log(localStorage.getItem("token"));
-
-    const newPhoto = {
-      image: event.target.querySelector("#file").value,
+    formData.append({
+      image: event.target.querySelector("#file").file[0],
       title: event.target.querySelector("#title").value,
-      id: parseInt(event.target.querySelector("#categories").value),
-    };
+      category: parseInt(event.target.querySelector("#categories").value),
+    });
+    formData.append( "multipart/form-data");
+    // formData.append("accept", "application/json");
+    // formData.append();
+    // console.log(localStorage.getItem("token"));
+
+    // const newPhoto = {
+      // image: event.target.querySelector("#file").value,
+      // title: event.target.querySelector("#title").value,
+      // category: parseInt(event.target.querySelector("#categories").value),
+    // };
 
    
     const requestOptions = {
       method: "POST",
-      headers: formData,
-      body: newPhoto,
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      },
+      body: formData,
     };
 
     //Appel de la fonction fetch avec toutes les informations nécessaire
@@ -363,7 +367,7 @@ function listenerAjoutPhoto() {
 listenerAjoutPhoto();
 
 
-
+//NE PAS OUBLIER CHANGEMENT DE COULEUR BTN VALIDER AVEC DISABLED 
 
 //------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
