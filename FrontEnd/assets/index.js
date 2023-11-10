@@ -26,9 +26,11 @@ function displayGallery(datas) {
 
 
 //Création des categories-------------------------------------------------
+//Parent des differente categorys
 let travauxFiltrer = document.createElement("div");
 travauxFiltrer.classList.add("filter_travaux");
 document.querySelector("#portfolio").appendChild(travauxFiltrer);
+
 
 
 // Filtrer les travaux------------------------------------------------------
@@ -37,21 +39,33 @@ function filtreCategory(id, datas) {
     return datas;
   }
   return datas.filter((data) => data.categoryId == id);
-}
-
-let Categories = {
-  0: "Tous",
-  1: "Objets",
-  2: "Appartements",
-  3: "Hôtel & restaurants",
 };
+
+
+
+let Categories = [];
+
+fetch('http://localhost:5678/api/categories')
+.then((res) => res.json())
+.then((datas) => {
+  Categories = datas;
+  console.log(Categories);
+});
+
+// let Categories = {
+//   0: "Tous",
+//   1: "Objets",
+//   2: "Appartements",
+//   3: "Hôtel & restaurants",
+// };
+
 
 //Boucle for pour créer les bouttons des differente categories
 for (category in Categories) {
   const categorie = document.createElement("button");
-  categorie.innerText = Categories[category];
+  categorie.innerText = Categories[category.name];
   categorie.className = "select filter";
-  categorie.dataset.id = category;
+  categorie.dataset.id = category.name;
   categorie.addEventListener("click", function () {
     displayGallery(filtreCategory(this.dataset.id, projects));
   });
@@ -261,7 +275,15 @@ modalGalerry.addEventListener("click", function (event) {
     fetch(`http://localhost:5678/api/works/${imgId}`, requestOption)
       .then(function (response) {
         if (response.ok) {
-          imgModalGalerry(projects);
+          for (let index = 0; index < projects.length; index++) {
+           if (projects[index].id == imgId) {
+            projects.splice(index, 1);
+           }
+            
+          }
+          displayGallery(projects);
+          closeModale();
+          
         } else {
           console.error("erreur supression");
         }
@@ -275,47 +297,7 @@ modalGalerry.addEventListener("click", function (event) {
 // ==========================================================================
 
 
-//Essaie n°2 ajout photo
-// function listenerAjoutPhoto() {
-//   const formModal = document.querySelector(".form_modale_2");
-//   formModal.addEventListener("submit", function (event) {
-//     event.preventDefault();
 
-//     const myHeaders = new Headers();
-//     myHeaders.append("Content-Type", "multipart/form-data");
-//     myHeaders.append("accept", "application/json");
-//     myHeaders.append(
-//       "Authorization",
-//       "Bearer " + localStorage.getItem("token")
-//     );
-//     // console.log(localStorage.getItem("token"));
-
-//     const newPhoto = {
-//       image: event.target.querySelector("#file").value,
-//       title: event.target.querySelector("#title").value,
-//       category: parseInt(event.target.querySelector("#categories").value),
-//     };
-
-   
-//     const requestOptions = {
-//       method: "POST",
-//       headers: myHeaders,
-//       body: newPhoto,
-//     };
-
-//     //Appel de la fonction fetch avec toutes les informations nécessaire
-//     fetch("http://localhost:5678/api/works", requestOptions).then((res) => {
-//       if (res.status == 201) {
-//         return res.json();
-//       }
-//       //Affichage de l'erreur dans html
-//       else {
-//         document.querySelector("#erreur2").style.display = "block";
-         
-//       }
-//     });
-//   });
-// };
 
 
 function listenerAjoutPhoto() {
@@ -323,24 +305,12 @@ function listenerAjoutPhoto() {
   formModal.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const formData = new formData();
-    formData.append({
-      image: event.target.querySelector("#file").file[0],
-      title: event.target.querySelector("#title").value,
-      category: parseInt(event.target.querySelector("#categories").value),
-    });
-    formData.append( "multipart/form-data");
-    // formData.append("accept", "application/json");
-    // formData.append();
-    // console.log(localStorage.getItem("token"));
-
-    // const newPhoto = {
-      // image: event.target.querySelector("#file").value,
-      // title: event.target.querySelector("#title").value,
-      // category: parseInt(event.target.querySelector("#categories").value),
-    // };
-
-   
+    const formData = new FormData();
+    formData.append("image", document.querySelector("#file").files[0]);
+    formData.append("title", document.querySelector("#title").value);
+    formData.append("category", parseInt(document.querySelector("#categories").value));
+    formData.append("Content-Type", "multipart/form-data");
+    
     const requestOptions = {
       method: "POST",
       headers: {
@@ -350,24 +320,28 @@ function listenerAjoutPhoto() {
     };
 
     //Appel de la fonction fetch avec toutes les informations nécessaire
-    fetch("http://localhost:5678/api/works", requestOptions).then((res) => {
+    fetch("http://localhost:5678/api/works", requestOptions)
+    .then((res) => {
       if (res.status == 201) {
         return res.json();
       }
       //Affichage de l'erreur dans html
       else {
         document.querySelector("#erreur2").style.display = "block";
-         
       }
+    }).then((result) => {
+      projects.push(result); //integrer l'image dans le tableau "projects"
+      closeModale2(); //Fermer la modale2 apres l'envoie de la requete
+      displayGallery(projects); //Afficher le new projet dans dans la gallery
+      
     });
+
   });
 }
-
-
 listenerAjoutPhoto();
 
 
-//NE PAS OUBLIER CHANGEMENT DE COULEUR BTN VALIDER AVEC DISABLED 
+//faire fonction coloration
 
 //------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------
