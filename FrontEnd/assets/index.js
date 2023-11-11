@@ -1,28 +1,28 @@
-let projects = [];
+let projects = []; //Création d'un tableau vide qui recevra les données 
 
-fetch("http://localhost:5678/api/works")
-  .then((res) => res.json())
+fetch("http://localhost:5678/api/works") //Requette GET à l'API pour récuperer les travaux 
+  .then((res) => res.json()) //Récupération de la réponse transformé au format JSON
   .then((data) => {
-    projects = data;
-    displayGallery(projects);
+    projects = data; //Insertion des données récupérer dans le tableau creer précèdement
+    displayGallery(projects); //Affichage des travaux via la function "displayGallery"
   });
 
 
 // Création de la galerry-------------------------------------------------------
-function displayGallery(datas) {
-  document.querySelector(".gallery").innerHTML = "";
-  datas.forEach((projet) => {
-    let fig = document.createElement("figure");
+function displayGallery(datas) {  //Création d'une function pour la création de la gallery
+  document.querySelector(".gallery").innerHTML = "";  //Vider le bloc "gallert"
+  datas.forEach((projet) => {   //Utilisation de la boucle forEach pour la création des élements de la gallerry
+    let fig = document.createElement("figure"); 
     let img = document.createElement("img");
-    img.src = projet.imageUrl;
-    img.alt = projet.title;
+    img.src = projet.imageUrl;  //Récuperation de la source pour chaque images
+    img.alt = projet.title;  
     let description = document.createElement("figcaption");
-    description.innerText = projet.title;
+    description.innerText = projet.title; //Récuperation et insertion du titre de chacunes des image
     fig.appendChild(img);
     fig.appendChild(description);
     document.querySelector(".gallery").appendChild(fig);
   });
-}
+};
 
 
 //Création des categories-------------------------------------------------
@@ -33,46 +33,64 @@ document.querySelector("#portfolio").appendChild(travauxFiltrer);
 
 
 
+
 // Filtrer les travaux------------------------------------------------------
-function filtreCategory(id, datas) {
-  if (id == 0) {
+function filtreCategory(id, datas) {  //Création de la function qui permet de filtrer les travaux
+  if (id == 0) {  //Condition qui permet d'afficher tout les travaux si l'id est égale à 0
     return datas;
   }
-  return datas.filter((data) => data.categoryId == id);
+  return datas.filter((data) => data.categoryId == id); //les travaux s'affiche selon l'id inserer dans les boutons des filtres exemple : si je clique sur un btn qui représente l'id 1 les travaux comportant la categoryId 1 seront affiché
 };
 
 
-
+//Récuperer les categories dynamiquement-------------------------------------- 
 let Categories = [];
 
 fetch('http://localhost:5678/api/categories')
 .then((res) => res.json())
 .then((datas) => {
   Categories = datas;
-  console.log(Categories);
+  displayCategory(Categories);
 });
 
-// let Categories = {
-//   0: "Tous",
-//   1: "Objets",
-//   2: "Appartements",
-//   3: "Hôtel & restaurants",
-// };
 
+//Création des button filtres
+function displayCategory(datas) {
+  datas.forEach((category) => {
+    let cats = document.createElement('button');
+    cats.classList.add('select');
+    travauxFiltrer.appendChild(cats);
+    cats.innerText = category.name;
+    cats.dataset.id = category.id;
+    cats.addEventListener("click", function () {
+      displayGallery(filtreCategory(this.dataset.id, projects));
+    });
+  });
+};
+
+// Creation du btn "TOUS"
+let tous = document.createElement('button');
+tous.classList.add('select');
+travauxFiltrer.appendChild(tous);
+tous.innerText = "Tous";
+
+tous.addEventListener('click', () => {
+  displayGallery(projects);
+});
 
 //Boucle for pour créer les bouttons des differente categories
-for (category in Categories) {
-  const categorie = document.createElement("button");
-  categorie.innerText = Categories[category.name];
-  categorie.className = "select filter";
-  categorie.dataset.id = category.name;
-  categorie.addEventListener("click", function () {
-    displayGallery(filtreCategory(this.dataset.id, projects));
-  });
+// for (category in Categories) {
+//   const categorie = document.createElement("button");
+//   categorie.innerText = Categories[category.name];
+//   categorie.className = "select filter";
+//   categorie.dataset.id = category.name;
+//   categorie.addEventListener("click", function () {
+//     displayGallery(filtreCategory(this.dataset.id, projects));
+//   });
 
-  travauxFiltrer.appendChild(categorie);
-  categorie.style.cursor = "pointer";
-};
+//   travauxFiltrer.appendChild(categorie);
+//   categorie.style.cursor = "pointer";
+// };
 
 
 //Création de la gallery--------------------------------------------------------
@@ -87,7 +105,7 @@ for (let i = 0; i < 4; i++) {
   document.querySelector("ul").appendChild(lien);
   const li = document.querySelector("li");
   lien.appendChild(li);
-}
+};
 
 //-------------------------------------------------------------------
 
@@ -106,7 +124,7 @@ function openModale() {
     .querySelector(".js-stop-modale")
     .addEventListener("mousedown", stopPropagation);
   imgModalGalerry(projects);
-}
+};
 
 // Fermeture de la modale-----------------------------------------------------
 const closeModale = function () {
@@ -201,6 +219,32 @@ btnReturnModal1.addEventListener("click", (e) => {
   openModale();
 });
 
+
+
+
+//Création des categories dans le formulaire d'envoie
+let catsForm = [];
+
+fetch('http://localhost:5678/api/categories')
+.then((res) => res.json()) 
+  .then((data) => {
+    catsForm = data; 
+    formCategory(catsForm); 
+  });
+
+let select = document.createElement('select');
+select.classList.add('cat_js_modale');
+document.querySelector('.form_modale_2').appendChild(select); 
+
+  function formCategory(datas) {
+    datas.forEach((category) => {
+      let options = document.createElement('option');
+      select.appendChild(options);
+      options.innerText = category.name;
+      options.value = category.id;
+      });
+  };
+
 // -----------------------------------------------------------------------------
 
 //Appartition et disparition des élément lors de la connexion-------------------------------
@@ -231,7 +275,7 @@ logout.addEventListener("click", function () {
   logoModif.style.display = "none";
 });
 
-//Création de la gallery modal en recupérant les img de l'API & insertion des corbeilles---------------------------------
+//Création de la gallery ds la modal en recupérant les img via l'API fetch, plus insertion des corbeilles pour la suppression des travaux
 function imgModalGalerry(datas) {
   modalGalerry.innerHTML = "";
   datas.forEach((imgProjet) => {
@@ -254,8 +298,11 @@ function imgModalGalerry(datas) {
     iconCorbeille.classList.add("fa-solid", "fa-trash-can");
     fondNoir.appendChild(iconCorbeille);
   });
-}
+};
 
+
+
+//------------------------------------------------------------------------------
 // suprimer une photo-----------------------------------------------------------
 modalGalerry.addEventListener("click", function (event) {
   const myHeaders = new Headers();
@@ -279,8 +326,7 @@ modalGalerry.addEventListener("click", function (event) {
            if (projects[index].id == imgId) {
             projects.splice(index, 1);
            }
-            
-          }
+          };
           displayGallery(projects);
           closeModale();
           
@@ -291,7 +337,7 @@ modalGalerry.addEventListener("click", function (event) {
       .catch(function (error) {
         console.error("erreur surpression", error);
       });
-  }
+  };
 });
 
 // ==========================================================================
@@ -308,7 +354,7 @@ function listenerAjoutPhoto() {
     const formData = new FormData();
     formData.append("image", document.querySelector("#file").files[0]);
     formData.append("title", document.querySelector("#title").value);
-    formData.append("category", parseInt(document.querySelector("#categories").value));
+    formData.append("category", parseInt(document.querySelector(".cat_js_modale").value));
     formData.append("Content-Type", "multipart/form-data");
     
     const requestOptions = {
@@ -337,7 +383,7 @@ function listenerAjoutPhoto() {
     });
 
   });
-}
+};
 listenerAjoutPhoto();
 
 
@@ -368,12 +414,10 @@ function affichageImage() {
         imagePreviewContainer.innerHTML = '';
         imagePreviewContainer.appendChild(image);
       });
-
       image.src = imageUrl;
       image.style.width = '129px'; 
       image.style.height = '169px';
     });
-      
     reader.readAsDataURL(file);
     }
   };

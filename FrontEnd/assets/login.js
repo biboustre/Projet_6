@@ -17,7 +17,6 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
     redirect: "follow",
   };
   
-  
   fetch("http://localhost:5678/api/users/login", requestOptions)
   .then((response) => {
     if(response.status == 200){
@@ -28,21 +27,15 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
       let erreur = document.querySelector('#erreur');
       erreur.style.display = "block";
     }
-  } )
+  })
   .then((result) => {
     //stockage du token dans le local storage
     localStorage.setItem(
       "token", result.token
-      );
-            
+      );    
             //redirect vers la page d'accueil
             document.location.href = "index.html";
             console.log(result);
       })
-      // .catch((error) => {
-      //   //styliser dans le html le message d'erreur
-      //    console.log("error", error);
-      // });
-      
     });
 
