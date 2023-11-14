@@ -25,6 +25,15 @@ function displayGallery(datas) {  //Création d'une function pour la création d
 };
 
 
+
+
+
+
+
+
+
+
+
 //Création des categories-------------------------------------------------
 //Parent des differente categorys
 let travauxFiltrer = document.createElement("div");
@@ -33,10 +42,9 @@ document.querySelector("#portfolio").appendChild(travauxFiltrer);
 
 
 
-
 // Filtrer les travaux------------------------------------------------------
 function filtreCategory(id, datas) {  //Création de la function qui permet de filtrer les travaux
-  if (id == 0) {  //Condition qui permet d'afficher tout les travaux si l'id est égale à 0
+  if (id == 0) {  //Condition qui permet d'afficher tout les travaux si l'id est égale à 0  DEMANDER CONFIRMATION à JULIEN--!!!----
     return datas;
   }
   return datas.filter((data) => data.categoryId == id); //les travaux s'affiche selon l'id inserer dans les boutons des filtres exemple : si je clique sur un btn qui représente l'id 1 les travaux comportant la categoryId 1 seront affiché
@@ -61,12 +69,13 @@ function displayCategory(datas) {
     cats.classList.add('select');
     travauxFiltrer.appendChild(cats);
     cats.innerText = category.name;
-    cats.dataset.id = category.id;
+    cats.dataset.id = category.id;    
     cats.addEventListener("click", function () {
-      displayGallery(filtreCategory(this.dataset.id, projects));
+      displayGallery(filtreCategory(this.dataset.id, projects)); 
     });
   });
 };
+
 
 // Creation du btn "TOUS"
 let tous = document.createElement('button');
@@ -78,25 +87,29 @@ tous.addEventListener('click', () => {
   displayGallery(projects);
 });
 
-//Boucle for pour créer les bouttons des differente categories
-// for (category in Categories) {
-//   const categorie = document.createElement("button");
-//   categorie.innerText = Categories[category.name];
-//   categorie.className = "select filter";
-//   categorie.dataset.id = category.name;
-//   categorie.addEventListener("click", function () {
-//     displayGallery(filtreCategory(this.dataset.id, projects));
-//   });
 
-//   travauxFiltrer.appendChild(categorie);
-//   categorie.style.cursor = "pointer";
-// };
+
+
+
+
+
+
+
+
+
+
 
 
 //Création de la gallery--------------------------------------------------------
 let gallery = document.createElement("div");
 gallery.classList.add("gallery");
 document.getElementById("portfolio").appendChild(gallery);
+
+
+
+
+
+
 
 
 //Ajout des balises <a> pour les liens de la <nav>-------------------------------
@@ -107,49 +120,58 @@ for (let i = 0; i < 4; i++) {
   lien.appendChild(li);
 };
 
-//-------------------------------------------------------------------
 
-//Affichage de la modale----------------------------------------------------
-function openModale() {
+
+
+
+
+
+
+
+
+
+
+
+// //Affichage de la modale 1----------------------------------------------------
+function openModale() {     //DEMANDER A JULIEN!!!!!!!!
   const target = document.querySelector("#modale");
-  target.classList.remove("hidden");
-  target.removeAttribute("aria-hidden");
-  target.setAttribute("aria-modale", "true");
+  target.classList.remove("hidden");  //Suprime le hidden pour faire apparaitre la modale
   modale = target;
-  modale.addEventListener("mousedown", closeModale);
+  modale.addEventListener("mousedown", closeModale); //Ferme la modale au click à l'éxtèrieur
   modale
     .querySelector(".js-close-modale")
-    .addEventListener("mousedown", closeModale);
+    .addEventListener("click", closeModale); //Ferme la modale au click sur l'icon x
   modale
     .querySelector(".js-stop-modale")
-    .addEventListener("mousedown", stopPropagation);
-  imgModalGalerry(projects);
+    .addEventListener("mousedown", stopPropagation); //Empeche fermeture modale au click dessus
+  imgModalGalerry(projects); //Affiche les img dans la modale
 };
 
-// Fermeture de la modale-----------------------------------------------------
-const closeModale = function () {
+
+
+
+// Fermeture de la modale 1-----------------------------------------------------
+const closeModale = function () {         //DEMANDER A JULIEN!!!!!!!!
   const target = document.querySelector("#modale");
-  target.classList.add("hidden");
-  target.setAttribute("aria-hidden", "true");
-  target.removeAttribute("aria-modale");
-  // modale.removeEventListener('click', closeModale);
-  target
-    .querySelector(".js-close-modale")
-    .removeEventListener("click", closeModale);
-  target
-    .querySelector(".js-stop-modale")
-    .removeEventListener("click", stopPropagation);
+  target.classList.add("hidden"); //Ajout du hidden pour faire disparaitre la modale
+  modale.removeEventListener('click', closeModale);
 };
+
+
 
 // //Ne ferme pas la modale quand on click dessus-------------------------------
 const stopPropagation = function (e) {
   e.stopPropagation();
 };
 
+
+
 //Lien qui ouvre la boîte modale------------------------------------------------
 document.querySelectorAll(".js-modale").forEach((a) => {
   a.addEventListener("click", openModale);
 });
+
+
 
 //Fermer les modales en appuyant sur Echap--------------------------------------
 window.addEventListener("keydown", function (e) {
@@ -159,6 +181,8 @@ window.addEventListener("keydown", function (e) {
   }
 });
 
+
+
 // Ajout des img des travaux dans la modale-------------------------------------
 let modalWrapper = document.querySelector(".modal_wrapper");
 let modalGalerry = document.createElement("div");
@@ -166,15 +190,15 @@ let modalGalerry = document.createElement("div");
 modalWrapper.appendChild(modalGalerry);
 modalGalerry.classList.add("modal_galerry");
 
-//Modale numéro 2 pour ajout de photo-------------------------------------------
-let modale2 = null;
 
-const openModale2 = function () {
+
+
+
+//Modale numéro 2 pour ajout de photo-------------------------------------------
+const openModale2 = function () {         
   closeModale();
   const target = document.querySelector("#modale_2");
   target.classList.remove("hidden");
-  target.removeAttribute("aria-hidden");
-  target.setAttribute("aria-modale", "true");
   modale = target;
   modale.addEventListener("mousedown", closeModale2);
   modale
@@ -186,25 +210,24 @@ const openModale2 = function () {
   imgModalGalerry(projects);
 };
 
-// Fermeture de la modale------------------------------------------------------
-const closeModale2 = function (e) {
+
+
+
+// Fermeture de la modale 2------------------------------------------------------
+const closeModale2 = function (e) {       //DEMANDER A JULIEN!!!!!!!!
   const target = document.querySelector("#modale_2");
   target.classList.add("hidden");
-  target.setAttribute("aria-hidden", "true");
-  target.removeAttribute("aria-modale");
-  // modale.removeEventListener('click', closeModale);
-  target
-    .querySelector(".js-close-modale_2")
-    .removeEventListener("click", closeModale);
-  target
-    .querySelector(".js-stop-modale_2")
-    .removeEventListener("click", stopPropagation);
+  modale.removeEventListener('click', closeModale);
 };
+
+
 
 // //Ne ferme pas la modale quand on click dessus-------------------------------
 const stopPropagation2 = function (e) {
   e.stopPropagation2();
 };
+
+
 
 //Lien qui ouvre la boîte modale  2---------------------------------------
 document.querySelectorAll(".js-modale2").forEach((a) => {
@@ -214,7 +237,6 @@ document.querySelectorAll(".js-modale2").forEach((a) => {
 let btnReturnModal1 = document.querySelector(".return-modal-1");
 
 btnReturnModal1.addEventListener("click", (e) => {
-  //btnReturnModal1.innerHTML = openModale;
   closeModale2();
   openModale();
 });
@@ -222,7 +244,24 @@ btnReturnModal1.addEventListener("click", (e) => {
 
 
 
-//Création des categories dans le formulaire d'envoie
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //Création des categories dans le formulaire d'envoie
 let catsForm = [];
 
 fetch('http://localhost:5678/api/categories')
@@ -236,7 +275,12 @@ let select = document.createElement('select');
 select.classList.add('cat_js_modale');
 document.querySelector('.form_modale_2').appendChild(select); 
 
+// select.required;
+
   function formCategory(datas) {
+    // let optionsDefault = document.createElement('option');
+    //   select.appendChild(optionsDefault);
+    //   optionsDefault.innerText = "Sélectionner une catégorie";
     datas.forEach((category) => {
       let options = document.createElement('option');
       select.appendChild(options);
@@ -245,7 +289,30 @@ document.querySelector('.form_modale_2').appendChild(select);
       });
   };
 
-// -----------------------------------------------------------------------------
+
+  //Coloration du bouton "envoyer" dans le formulaire d'envoie de nouveau travaux
+  document.querySelector('.form_modale_2').addEventListener('change', ()=>{
+    if (document.querySelector('#title').value != "" & document.querySelector('#file').value != "") {
+    document.querySelector('.btn_valider').style.backgroundColor = "blue";
+  };
+  });
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Appartition et disparition des élément lors de la connexion-------------------------------
 let modEdit = document.querySelector(".mode_edition");
@@ -265,6 +332,9 @@ if (localStorage.getItem("token")) {
   login.style.display = "none";
 }
 
+
+
+
 //Function pour se deconnecter du compte et effacer le contenu qui apparait seulement lors de la connexion--------------------
 logout.addEventListener("click", function () {
   localStorage.removeItem("token");
@@ -274,6 +344,9 @@ logout.addEventListener("click", function () {
   document.querySelector(".js-modale").style.display = "none";
   logoModif.style.display = "none";
 });
+
+
+
 
 //Création de la gallery ds la modal en recupérant les img via l'API fetch, plus insertion des corbeilles pour la suppression des travaux
 function imgModalGalerry(datas) {
@@ -302,7 +375,18 @@ function imgModalGalerry(datas) {
 
 
 
-//------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
 // suprimer une photo-----------------------------------------------------------
 modalGalerry.addEventListener("click", function (event) {
   const myHeaders = new Headers();
@@ -315,9 +399,9 @@ modalGalerry.addEventListener("click", function (event) {
     redirect: "follow",
   };
 
-  if (event.target.classList.contains("fa-solid", "fa-trash-can")) {
-    const parent = event.target.closest("div");
-    const imgId = parent.dataset.id;
+  if (event.target.classList.contains("fa-solid", "fa-trash-can")) { 
+    const parent = event.target.parentElement.parentElement; 
+    const imgId = parent.dataset.id;  
 
     fetch(`http://localhost:5678/api/works/${imgId}`, requestOption)
       .then(function (response) {
@@ -340,7 +424,13 @@ modalGalerry.addEventListener("click", function (event) {
   };
 });
 
-// ==========================================================================
+
+
+
+
+
+
+
 
 
 
@@ -376,9 +466,9 @@ function listenerAjoutPhoto() {
         document.querySelector("#erreur2").style.display = "block";
       }
     }).then((result) => {
-      projects.push(result); //integrer l'image dans le tableau "projects"
-      closeModale2(); //Fermer la modale2 apres l'envoie de la requete
-      displayGallery(projects); //Afficher le new projet dans dans la gallery
+      projects.push(result); 
+      closeModale2(); 
+      displayGallery(projects);
       
     });
 
@@ -387,15 +477,13 @@ function listenerAjoutPhoto() {
 listenerAjoutPhoto();
 
 
-//faire fonction coloration
 
-//------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------
+
 
 
 //Function pour afficher l'image ajouter et effacer le contenu après l'ajout de l'image
 function affichageImage() {
-  const fileInput = document.getElementById('file');
+  const fileInput = document.getElementById('file'); 
   const file = fileInput.files[0];
   const imagePreviewContainer = document.getElementById('previewImageContainer');
 
@@ -404,9 +492,9 @@ function affichageImage() {
     document.querySelector('.label_file').style.display = "none";
     document.querySelector('.taille-img').style.display = "none";
 
-    const reader = new FileReader();
+    const reader = new FileReader(); 
 
-    reader.addEventListener('load', function(event) {
+    reader.addEventListener('load', function(event) { 
       const imageUrl = event.target.result;
       const image = new Image();
 
@@ -418,7 +506,7 @@ function affichageImage() {
       image.style.width = '129px'; 
       image.style.height = '169px';
     });
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file); 
     }
   };
   

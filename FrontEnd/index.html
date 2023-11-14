@@ -61,8 +61,8 @@
 		</div>
 		
 		
-
-		<aside id="modale" class="modal hidden" aria-hidden="true" role="dialog">
+<!-- aria-hidden="true" -->
+		<aside id="modale" class="modal hidden"  role="dialog">
 			<div class="modal_wrapper js-stop-modale">
 				<button class="js-close-modale"><i class="fa-solid fa-xmark"></i></button>
 				<h1 class="title_modale">Galerie photo</h1>
@@ -74,7 +74,7 @@
 
 
 	<!-------------MODALE NUMERO 2 --------------->
-		<aside id="modale_2" class="modal_2 hidden" aria-hidden="true" role="dialog" >
+		<aside id="modale_2" class="modal_2 hidden"  role="dialog" >
 			<div class="modal_wrapper_2 js-stop-modale_2">
 				<button class="return-modal-1"><i class="fa-solid fa-arrow-left"></i></button>
 				<button class="js-close-modale_2"><i class="fa-solid fa-xmark"></i></button>
@@ -83,7 +83,7 @@
 				
 				<form enctype="multipart/form-data" class="form_modale_2" action="" method="POST" >
 					<section id="ajout-photo-modal">
-						<!-- <img src="assets/images/abajour-tahina.png" alt="image" id="changeme" style="height: 169px; width: 129px;"> -->
+						
 						<div id="icon-photo">
 							<i class="fa-regular fa-image"></i>
 						</div>
@@ -95,7 +95,7 @@
 						<p class="taille-img">jpg, png : 4mo max</p>
 					</section>
 					<label for="title" >Titre</label>
-					<input type="text" name="title" id="title">
+					<input type="text" name="title" id="title" required>
 					<label for="categories">Catégorie</label>
 					
 					<hr>
