@@ -439,6 +439,13 @@ footer nav ul {
   cursor: pointer;
 }
 
+.fa-xmark{
+  filter:invert(1);
+}
+
+
+
+
 .modal_galerry {
   position: relative;
   display: grid;
