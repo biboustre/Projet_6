@@ -23,10 +23,10 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
       return response.json();
     }
     // Afficher l'erreur dans le html
-    else{
-      let erreur = document.querySelector('#erreur');
-      erreur.style.display = "block";
-    }
+    // else{
+    //   let erreur = document.querySelector('#erreur');
+    //   erreur.style.display = "block";
+    // }
   })
   .then((result) => {
     //stockage du token dans le local storage
@@ -36,6 +36,12 @@ document.querySelector("#submit_JS").addEventListener("click", function (event) 
             //redirect vers la page d'accueil
             document.location.href = "index.html";
             console.log(result);
+      })
+      .catch((error) => {
+        console.error("erreur lors de la connexion", error);
+        let erreur = document.querySelector('#erreur');
+        erreur.style.display = "block";
+
       })
     });
 

@@ -5,6 +5,9 @@ fetch("http://localhost:5678/api/works")
   .then((data) => {
     projects = data; 
     displayGallery(projects); 
+  })
+  .catch((error) => {
+    console.error("erreur lors de la récupération des données", error);
   });
 
 
@@ -51,7 +54,11 @@ fetch('http://localhost:5678/api/categories')
 .then((datas) => {
   Categories = datas;
   displayCategory(Categories);
+})
+.catch((error) => {
+  console.error("erreur lors de la récupération des données", error);
 });
+
 
 
 //Création des button filtres
@@ -175,8 +182,7 @@ const openModale2 = function () {
 
 modale.
 querySelector('.js-close-modale').style.backgroundColor = "white"; 
-// modale.
-// querySelector('i').style.color = "black";
+
 
 
 
@@ -224,6 +230,9 @@ fetch('http://localhost:5678/api/categories')
   .then((data) => {
     catsForm = data; 
     formCategory(catsForm); 
+  })
+  .catch((error) => {
+    console.error("Problème lors de la récupération des données", error);
   });
 
 
@@ -234,9 +243,6 @@ document.querySelector('.form_modale_2').appendChild(select);
 
 
   function formCategory(datas) {
-    // let optionsDefault = document.createElement('option');
-    //   select.appendChild(optionsDefault);
-    //   optionsDefault.innerText = "Sélectionner une catégorie";
     datas.forEach((category) => {
       let options = document.createElement('option');
       select.appendChild(options);
@@ -345,9 +351,10 @@ modalGalerry.addEventListener("click", function (event) {
           displayGallery(projects); 
           closeModale();  
           
-        } else {
-          console.error("erreur supression");
-        }
+        } 
+        // else {
+        //   console.error("erreur supression");
+        // }
       })
       .catch(function (error) {
         console.error("erreur surpression", error);
@@ -383,16 +390,18 @@ function listenerAjoutPhoto() {
         return res.json();
       }
       //Affichage de l'erreur dans html
-      else {
-        document.querySelector("#erreur2").style.display = "block";
-      }
+      // else {
+      //   document.querySelector("#erreur2").style.display = "block";
+      // }
     }).then((result) => {
       projects.push(result); 
       closeModale2(); 
       displayGallery(projects);
-      
-    });
-
+    })
+    .catch((error) => {
+      console.error("erreur lors de l'ajout", error);
+      document.querySelector("#erreur2").style.display = "block";
+    })
   });
 };
 listenerAjoutPhoto();
